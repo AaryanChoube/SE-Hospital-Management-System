@@ -1,0 +1,31 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+}
+top to bottom direction
+
+title Collaboration Diagram - Appointment Scheduling & Billing
+
+actor "__:Patient__" as P
+rectangle "<<boundary>>\n__:PatientPortal__" as UI
+rectangle "<<control>>\n__:AppointmentController__" as AC
+rectangle "<<entity>>\n__:ScheduleDB__" as DB
+rectangle "<<control>>\n__:BillingService__" as BS
+rectangle "<<boundary>>\n__:PaymentGateway__" as PG
+
+P -down-> UI : 1: submitBookingReq()\n6: initiatePayment()
+UI -right-> AC : 2: processBooking()
+AC -down-> DB : 3: checkAndLockSlot()
+AC -left-> BS : 4: initBillingRecord()
+UI -down-> BS : 5: computeBillAmount()
+BS -right-> PG : 7: authorizeTransaction()
+PG -left-> BS : 8: transactionStatus(OK)
+BS -up-> UI : 9: returnReceipt()
+
+@enduml

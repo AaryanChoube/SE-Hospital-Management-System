@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="580" viewBox="0 0 1000 580">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="500" y="32" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Gantt Chart - Hospital Management System (47 Days CPM Schedule)</text>
+  <text x="500" y="52" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#dc2626">Red Bars = Critical Path Activities (Zero Float) | Blue Bars = Non-Critical Activities</text>
+
+  <!-- Timeline Header -->
+  <line x1="280" y1="80" x2="960" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="280" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 0</text>
+  <text x="425" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 10</text>
+  <text x="570" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 20</text>
+  <text x="715" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 30</text>
+  <text x="860" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 40</text>
+  <text x="960" y="75" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#dc2626">Day 47</text>
+
+  <!-- Grid lines -->
+  <line x1="280" y1="80" x2="280" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="425" y1="80" x2="425" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="570" y1="80" x2="570" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="715" y1="80" x2="715" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="860" y1="80" x2="860" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="960" y1="80" x2="960" y2="540" stroke="#fecaca" stroke-width="1.5" stroke-dasharray="4"/>
+
+  <!-- Scale: 1 day = 14.47 px -->
+  <!-- A: 0-5 (72px) -->
+  <text x="260" y="115" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">A: Requirement Analysis (5d)</text>
+  <rect x="280" y="100" width="72" height="22" rx="3" fill="#ef4444"/>
+  <text x="316" y="115" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">5d</text>
+
+  <!-- B: 5-9 (58px) -->
+  <text x="260" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">B: SRS Preparation (4d)</text>
+  <rect x="352" y="140" width="58" height="22" rx="3" fill="#ef4444"/>
+  <text x="381" y="155" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">4d</text>
+
+  <!-- C: 9-15 (87px) -->
+  <text x="260" y="195" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">C: System Design (DFD/UML) (6d)</text>
+  <rect x="410" y="180" width="87" height="22" rx="3" fill="#ef4444"/>
+  <text x="453" y="195" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">6d</text>
+
+  <!-- D: 15-20 (72px) -->
+  <text x="260" y="235" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">D: Database Design &amp; Schema (5d)</text>
+  <rect x="497" y="220" width="72" height="22" rx="3" fill="#ef4444"/>
+  <text x="533" y="235" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">5d</text>
+
+  <!-- E: 15-23 (116px) - Non-critical -->
+  <text x="260" y="275" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0369a1">E: UI/UX Wireframing (8d)</text>
+  <rect x="497" y="260" width="116" height="22" rx="3" fill="#0284c7"/>
+  <text x="555" y="275" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">8d (Slack)</text>
+
+  <!-- F: 20-29 (130px) -->
+  <text x="260" y="315" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">F: Patient Reg &amp; Appt (9d)</text>
+  <rect x="569" y="300" width="130" height="22" rx="3" fill="#ef4444"/>
+  <text x="634" y="315" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">9d</text>
+
+  <!-- G: 20-28 (116px) - Non-critical -->
+  <text x="260" y="355" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0369a1">G: Doctor Consult &amp; EHR (8d)</text>
+  <rect x="569" y="340" width="116" height="22" rx="3" fill="#0284c7"/>
+  <text x="627" y="355" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">8d</text>
+
+  <!-- H: 29-36 (101px) - Non-critical -->
+  <text x="260" y="395" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0369a1">H: Pharmacy &amp; Lab (7d)</text>
+  <rect x="699" y="380" width="101" height="22" rx="3" fill="#0284c7"/>
+  <text x="750" y="395" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">7d</text>
+
+  <!-- I: 29-38 (130px) -->
+  <text x="260" y="435" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">I: Billing &amp; Payment (9d)</text>
+  <rect x="699" y="420" width="130" height="22" rx="3" fill="#ef4444"/>
+  <text x="764" y="435" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">9d</text>
+
+  <!-- J: 38-44 (87px) -->
+  <text x="260" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">J: Testing &amp; Integration (6d)</text>
+  <rect x="829" y="460" width="87" height="22" rx="3" fill="#ef4444"/>
+  <text x="872" y="475" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">6d</text>
+
+  <!-- K: 44-47 (44px) -->
+  <text x="260" y="515" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">K: Deployment &amp; Training (3d)</text>
+  <rect x="916" y="500" width="44" height="22" rx="3" fill="#ef4444"/>
+  <text x="938" y="515" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">3d</text>
+</svg>

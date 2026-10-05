@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="650" viewBox="0 0 980 650">
+  <defs>
+    <marker id="uc_arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="490" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Use Case Diagram - Hospital Management System (HMS)</text>
+
+  <!-- System Boundary Box -->
+  <rect x="230" y="60" width="520" height="570" rx="8" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+  <text x="490" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0369a1">HOSPITAL MANAGEMENT SYSTEM (HMS)</text>
+
+  <!-- Actors (Stickmen) Left -->
+  <!-- Patient -->
+  <circle cx="90" cy="120" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="134" x2="90" y2="170" stroke="#1e293b" stroke-width="2"/>
+  <line x1="65" y1="148" x2="115" y2="148" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="170" x2="70" y2="205" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="170" x2="110" y2="205" stroke="#1e293b" stroke-width="2"/>
+  <text x="90" y="225" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+
+  <!-- Receptionist -->
+  <circle cx="90" cy="300" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="314" x2="90" y2="350" stroke="#1e293b" stroke-width="2"/>
+  <line x1="65" y1="328" x2="115" y2="328" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="350" x2="70" y2="385" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="350" x2="110" y2="385" stroke="#1e293b" stroke-width="2"/>
+  <text x="90" y="405" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Receptionist</text>
+
+  <!-- Administrator -->
+  <circle cx="90" cy="480" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="494" x2="90" y2="530" stroke="#1e293b" stroke-width="2"/>
+  <line x1="65" y1="508" x2="115" y2="508" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="530" x2="70" y2="565" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="530" x2="110" y2="565" stroke="#1e293b" stroke-width="2"/>
+  <text x="90" y="585" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Administrator</text>
+
+  <!-- Actors Right -->
+  <!-- Doctor -->
+  <circle cx="890" cy="120" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="134" x2="890" y2="170" stroke="#1e293b" stroke-width="2"/>
+  <line x1="865" y1="148" x2="915" y2="148" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="170" x2="870" y2="205" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="170" x2="910" y2="205" stroke="#1e293b" stroke-width="2"/>
+  <text x="890" y="225" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Doctor</text>
+
+  <!-- Pharmacist / Lab Tech -->
+  <circle cx="890" cy="300" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="314" x2="890" y2="350" stroke="#1e293b" stroke-width="2"/>
+  <line x1="865" y1="328" x2="915" y2="328" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="350" x2="870" y2="385" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="350" x2="910" y2="385" stroke="#1e293b" stroke-width="2"/>
+  <text x="890" y="405" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Pharm / Lab Tech</text>
+
+  <!-- Payment Gateway -->
+  <circle cx="890" cy="480" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="494" x2="890" y2="530" stroke="#1e293b" stroke-width="2"/>
+  <line x1="865" y1="508" x2="915" y2="508" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="530" x2="870" y2="565" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="530" x2="910" y2="565" stroke="#1e293b" stroke-width="2"/>
+  <text x="890" y="585" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Payment Gateway</text>
+
+  <!-- Use Cases (Ovals) -->
+  <!-- UC1 Register Patient -->
+  <ellipse cx="340" cy="120" rx="80" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="340" y="124" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Register Patient</text>
+
+  <!-- UC2 Book Appt -->
+  <ellipse cx="340" cy="190" rx="85" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="340" y="194" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Book Appointment</text>
+
+  <!-- UC2_Inc Verify Doctor Availability -->
+  <ellipse cx="580" cy="160" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="580" y="164" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Verify Doctor Availability</text>
+
+  <!-- UC3 Record Vitals & Clinical Notes -->
+  <ellipse cx="610" cy="230" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="610" y="234" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Record EHR &amp; Diagnosis</text>
+
+  <!-- UC4 Prescribe Meds & Order Tests -->
+  <ellipse cx="610" cy="300" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="610" y="304" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Prescribe Meds &amp; Lab Tests</text>
+
+  <!-- UC5 Dispense Drugs & Lab Report -->
+  <ellipse cx="610" cy="370" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="610" y="374" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Dispense Drugs &amp; Lab Tests</text>
+
+  <!-- UC6 Calculate Bill -->
+  <ellipse cx="350" cy="430" rx="80" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="350" y="434" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Calculate Total Bill</text>
+
+  <!-- UC7 Process Payment -->
+  <ellipse cx="580" cy="480" rx="85" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="580" y="484" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Process Payment</text>
+
+  <!-- UC8 Manage Staff & Reports (Admin) -->
+  <ellipse cx="360" cy="550" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="360" y="554" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Manage Staff &amp; MIS Reports</text>
+
+  <!-- Links -->
+  <line x1="120" y1="160" x2="255" y2="190" stroke="#334155" stroke-width="1.5"/>
+  <line x1="120" y1="330" x2="260" y2="130" stroke="#334155" stroke-width="1.5"/>
+  <line x1="120" y1="340" x2="255" y2="190" stroke="#334155" stroke-width="1.5"/>
+  <line x1="120" y1="360" x2="270" y2="430" stroke="#334155" stroke-width="1.5"/>
+  <line x1="120" y1="520" x2="265" y2="550" stroke="#334155" stroke-width="1.5"/>
+
+  <line x1="860" y1="160" x2="705" y2="230" stroke="#334155" stroke-width="1.5"/>
+  <line x1="860" y1="170" x2="705" y2="300" stroke="#334155" stroke-width="1.5"/>
+  <line x1="860" y1="340" x2="705" y2="370" stroke="#334155" stroke-width="1.5"/>
+  <line x1="860" y1="500" x2="665" y2="480" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Include relationship -->
+  <line x1="420" y1="180" x2="490" y2="170" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#uc_arrow)"/>
+  <text x="460" y="168" font-family="Arial, sans-serif" font-size="9" font-style="italic" fill="#0284c7">&lt;&lt;include&gt;&gt;</text>
+
+  <line x1="425" y1="445" x2="500" y2="470" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#uc_arrow)"/>
+  <text x="475" y="450" font-family="Arial, sans-serif" font-size="9" font-style="italic" fill="#0284c7">&lt;&lt;include&gt;&gt;</text>
+</svg>

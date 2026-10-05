@@ -1,0 +1,202 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+title Class Diagram - Hospital Management System (HMS)
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+
+' =========================
+' CLASSES
+' =========================
+
+abstract class User {
+    # userId : String
+    # name : String
+    # email : String
+    # phone : String
+    # passwordHash : String
+    --
+    + login() : boolean
+    + logout() : void
+    + updateProfile() : void
+}
+
+class Patient {
+    - patientId : String
+    - dob : Date
+    - gender : String
+    - bloodGroup : String
+    - emergencyContact : String
+    --
+    + register() : void
+    + bookAppointment() : Appointment
+    + viewMedicalHistory() : List
+    + payBill() : boolean
+}
+
+abstract class Staff {
+    # employeeId : String
+    # dateOfJoining : Date
+    # salary : double
+    --
+    + markAttendance() : void
+}
+
+class Doctor {
+    - doctorId : String
+    - specialization : String
+    - licenseNumber : String
+    - consultationFee : double
+    --
+    + examinePatient(patientId) : MedicalRecord
+    + writePrescription(recordId) : Prescription
+    + orderLabTest(patientId) : LabTest
+}
+
+class Receptionist {
+    - receptionistId : String
+    --
+    + registerPatient(patient) : void
+    + scheduleAppointment() : Appointment
+    + allocateBed(patientId) : void
+}
+
+class Pharmacist {
+    - pharmacistId : String
+    - licenseNo : String
+    --
+    + dispenseMedicine(prescriptionId) : void
+    + checkStock(medicineId) : int
+    + restockMedicine(medicineId, qty) : void
+}
+
+class LabTechnician {
+    - technicianId : String
+    - certification : String
+    --
+    + collectSample(testId) : void
+    + uploadTestResult(testId, data) : void
+}
+
+class Administrator {
+    - adminId : String
+    --
+    + manageUsers() : void
+    + viewAuditLogs() : List
+    + generateMISReports() : void
+}
+
+class Department {
+    - deptId : String
+    - deptName : String
+    - location : String
+    --
+    + addDoctor(doctor) : void
+    + getAvailableDoctors() : List
+}
+
+class Appointment {
+    - appointmentId : String
+    - appointmentDate : Date
+    - timeSlot : String
+    - status : String
+    --
+    + confirmAppointment() : void
+    + cancelAppointment() : void
+    + reschedule(newDate) : void
+}
+
+class MedicalRecord {
+    - recordId : String
+    - diagnosis : String
+    - symptoms : String
+    - recordDate : Date
+    --
+    + addPrescription(p) : void
+    + attachLabReport(r) : void
+}
+
+class Prescription {
+    - prescriptionId : String
+    - issueDate : Date
+    - instructions : String
+    --
+    + addMedicine(item) : void
+}
+
+class PrescriptionItem {
+    - medicineId : String
+    - medicineName : String
+    - dosage : String
+    - durationDays : int
+}
+
+class Medicine {
+    - medicineId : String
+    - name : String
+    - unitPrice : double
+    - stockQuantity : int
+    - expiryDate : Date
+    --
+    + reduceStock(qty) : boolean
+    + restock(qty) : void
+}
+
+class LabTest {
+    - testId : String
+    - testName : String
+    - cost : double
+    - status : String
+    - resultData : String
+    --
+    + processTest() : void
+    + generateReport() : String
+}
+
+class Bill {
+    - billId : String
+    - billingDate : Date
+    - consultationFee : double
+    - labCharges : double
+    - pharmacyCharges : double
+    - netAmount : double
+    - paymentStatus : String
+    --
+    + calculateBill(fee, labCost, hasIns, isEmerg) : double
+    + processPayment(mode) : boolean
+    + generateReceipt() : void
+}
+
+' =========================
+' RELATIONSHIPS
+' =========================
+
+User <|-- Patient
+User <|-- Staff
+Staff <|-- Doctor
+Staff <|-- Receptionist
+Staff <|-- Pharmacist
+Staff <|-- LabTechnician
+Staff <|-- Administrator
+
+Department "1" o-- "1..*" Doctor : contains >
+
+Patient "1" --> "0..*" Appointment : books >
+Doctor "1" --> "0..*" Appointment : attends >
+Appointment "1" --> "1" Bill : generates >
+
+Patient "1" --> "0..*" MedicalRecord : has >
+Doctor "1" --> "0..*" MedicalRecord : creates >
+
+MedicalRecord "1" *-- "1" Prescription : contains >
+Prescription "1" *-- "1..*" PrescriptionItem : includes >
+PrescriptionItem ..> Medicine : references >
+
+Doctor "1" --> "0..*" LabTest : requests >
+LabTechnician "1" --> "0..*" LabTest : conducts >
+
+Bill "1" --> "1" Patient : billed to >
+
+@enduml

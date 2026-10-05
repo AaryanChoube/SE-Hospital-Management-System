@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="720" viewBox="0 0 1050 720">
+  <defs>
+    <marker id="inherit" viewBox="0 0 12 12" refX="1" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,1 11,6 1,11" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+    </marker>
+    <marker id="aggr" viewBox="0 0 16 12" refX="1" refY="6" markerWidth="11" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,6 8,1 15,6 8,11" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+    </marker>
+    <marker id="comp" viewBox="0 0 16 12" refX="1" refY="6" markerWidth="11" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,6 8,1 15,6 8,11" fill="#1e293b" stroke="#1e293b" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="525" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Class Diagram - Hospital Management System (HMS)</text>
+
+  <!-- User Abstract Class (Top Center) -->
+  <rect x="420" y="50" width="210" height="110" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="420" y="50" width="210" height="26" fill="#e2e8f0"/>
+  <text x="525" y="68" font-family="Arial, sans-serif" font-size="12" font-style="italic" font-weight="bold" text-anchor="middle" fill="#0f172a">&lt;&lt;abstract&gt;&gt; User</text>
+  <text x="430" y="92" font-family="Courier, monospace" font-size="10" fill="#334155"># userId : String</text>
+  <text x="430" y="106" font-family="Courier, monospace" font-size="10" fill="#334155"># name, email, phone : String</text>
+  <line x1="420" y1="114" x2="630" y2="114" stroke="#cbd5e1"/>
+  <text x="430" y="130" font-family="Courier, monospace" font-size="10" fill="#334155">+ login() : boolean</text>
+  <text x="430" y="146" font-family="Courier, monospace" font-size="10" fill="#334155">+ logout() : void</text>
+
+  <!-- Patient Class (Left) -->
+  <rect x="50" y="220" width="220" height="130" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="50" y="220" width="220" height="26" fill="#e2e8f0"/>
+  <text x="160" y="238" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">Patient</text>
+  <text x="60" y="260" font-family="Courier, monospace" font-size="10" fill="#334155">- patientId : String</text>
+  <text x="60" y="274" font-family="Courier, monospace" font-size="10" fill="#334155">- bloodGroup, dob : String</text>
+  <line x1="50" y1="284" x2="270" y2="284" stroke="#cbd5e1"/>
+  <text x="60" y="302" font-family="Courier, monospace" font-size="10" fill="#334155">+ register() : void</text>
+  <text x="60" y="318" font-family="Courier, monospace" font-size="10" fill="#334155">+ bookAppointment() : Appt</text>
+  <text x="60" y="334" font-family="Courier, monospace" font-size="10" fill="#334155">+ payBill(mode) : boolean</text>
+
+  <!-- Staff Abstract Class (Right) -->
+  <rect x="500" y="220" width="210" height="95" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="500" y="220" width="210" height="26" fill="#e2e8f0"/>
+  <text x="605" y="238" font-family="Arial, sans-serif" font-size="12" font-style="italic" font-weight="bold" text-anchor="middle" fill="#0f172a">&lt;&lt;abstract&gt;&gt; Staff</text>
+  <text x="510" y="260" font-family="Courier, monospace" font-size="10" fill="#334155"># employeeId : String</text>
+  <text x="510" y="274" font-family="Courier, monospace" font-size="10" fill="#334155"># salary : double</text>
+  <line x1="500" y1="284" x2="710" y2="284" stroke="#cbd5e1"/>
+  <text x="510" y="302" font-family="Courier, monospace" font-size="10" fill="#334155">+ markAttendance() : void</text>
+
+  <!-- Doctor Class -->
+  <rect x="360" y="370" width="220" height="120" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="360" y="370" width="220" height="26" fill="#e2e8f0"/>
+  <text x="470" y="388" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">Doctor</text>
+  <text x="370" y="410" font-family="Courier, monospace" font-size="10" fill="#334155">- doctorId : String</text>
+  <text x="370" y="424" font-family="Courier, monospace" font-size="10" fill="#334155">- specialization : String</text>
+  <line x1="360" y1="434" x2="580" y2="434" stroke="#cbd5e1"/>
+  <text x="370" y="450" font-family="Courier, monospace" font-size="10" fill="#334155">+ examinePatient() : MedRecord</text>
+  <text x="370" y="466" font-family="Courier, monospace" font-size="10" fill="#334155">+ writePrescription() : Presc</text>
+
+  <!-- Department Class -->
+  <rect x="790" y="370" width="210" height="95" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="790" y="370" width="210" height="26" fill="#e2e8f0"/>
+  <text x="895" y="388" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">Department</text>
+  <text x="800" y="410" font-family="Courier, monospace" font-size="10" fill="#334155">- deptId, name : String</text>
+  <line x1="790" y1="420" x2="1000" y2="420" stroke="#cbd5e1"/>
+  <text x="800" y="440" font-family="Courier, monospace" font-size="10" fill="#334155">+ addDoctor(d) : void</text>
+  <text x="800" y="454" font-family="Courier, monospace" font-size="10" fill="#334155">+ getAvailableDoctors() : List</text>
+
+  <!-- Appointment Class -->
+  <rect x="50" y="420" width="220" height="110" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="50" y="420" width="220" height="26" fill="#e2e8f0"/>
+  <text x="160" y="438" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">Appointment</text>
+  <text x="60" y="460" font-family="Courier, monospace" font-size="10" fill="#334155">- appointmentId : String</text>
+  <text x="60" y="474" font-family="Courier, monospace" font-size="10" fill="#334155">- timeSlot, status : String</text>
+  <line x1="50" y1="484" x2="270" y2="484" stroke="#cbd5e1"/>
+  <text x="60" y="502" font-family="Courier, monospace" font-size="10" fill="#334155">+ confirm() / reschedule()</text>
+
+  <!-- Bill Class (Bottom Center) -->
+  <rect x="360" y="550" width="240" height="140" rx="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <rect x="360" y="550" width="240" height="26" fill="#fee2e2"/>
+  <text x="480" y="568" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#b91c1c">Bill (SE Exp 12 Tested)</text>
+  <text x="370" y="590" font-family="Courier, monospace" font-size="10" fill="#334155">- billId : String</text>
+  <text x="370" y="604" font-family="Courier, monospace" font-size="10" fill="#334155">- fee, labCost, netAmount : double</text>
+  <line x1="360" y1="614" x2="600" y2="614" stroke="#fca5a5"/>
+  <text x="370" y="632" font-family="Courier, monospace" font-size="10" font-weight="bold" fill="#b91c1c">+ calculateBill(...) : double</text>
+  <text x="370" y="648" font-family="Courier, monospace" font-size="10" fill="#334155">+ processPayment() : boolean</text>
+  <text x="370" y="664" font-family="Courier, monospace" font-size="10" fill="#334155">+ generateReceipt() : Invoice</text>
+
+  <!-- MedicalRecord & Prescription (Bottom Right) -->
+  <rect x="730" y="530" width="260" height="130" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="730" y="530" width="260" height="26" fill="#e2e8f0"/>
+  <text x="860" y="548" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">MedicalRecord &amp; Prescription</text>
+  <text x="740" y="570" font-family="Courier, monospace" font-size="10" fill="#334155">- recordId, diagnosis : String</text>
+  <text x="740" y="584" font-family="Courier, monospace" font-size="10" fill="#334155">- prescriptionItems : List</text>
+  <line x1="730" y1="594" x2="990" y2="594" stroke="#cbd5e1"/>
+  <text x="740" y="612" font-family="Courier, monospace" font-size="10" fill="#334155">+ addPrescriptionItem() : void</text>
+  <text x="740" y="628" font-family="Courier, monospace" font-size="10" fill="#334155">+ attachLabReport() : void</text>
+
+  <!-- Relationships -->
+  <!-- Patient extends User -->
+  <line x1="160" y1="220" x2="440" y2="160" stroke="#1e293b" stroke-width="1.5" marker-end="url(#inherit)"/>
+  <!-- Staff extends User -->
+  <line x1="605" y1="220" x2="525" y2="160" stroke="#1e293b" stroke-width="1.5" marker-end="url(#inherit)"/>
+  <!-- Doctor extends Staff -->
+  <line x1="470" y1="370" x2="580" y2="315" stroke="#1e293b" stroke-width="1.5" marker-end="url(#inherit)"/>
+
+  <!-- Aggregation: Dept o- Doctor -->
+  <line x1="790" y1="415" x2="580" y2="415" stroke="#1e293b" stroke-width="1.5" marker-start="url(#aggr)"/>
+  <text x="760" y="408" font-family="Arial, sans-serif" font-size="10" fill="#475569">1</text>
+  <text x="600" y="408" font-family="Arial, sans-serif" font-size="10" fill="#475569">1..*</text>
+
+  <!-- Patient books Appointment -->
+  <line x1="160" y1="350" x2="160" y2="420" stroke="#1e293b" stroke-width="1.5"/>
+  <!-- Doctor attends Appointment -->
+  <line x1="360" y1="450" x2="270" y2="470" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Appointment to Bill -->
+  <line x1="270" y1="500" x2="360" y2="570" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Doctor creates MedicalRecord (Composition) -->
+  <line x1="580" y1="470" x2="730" y2="560" stroke="#1e293b" stroke-width="1.5" marker-start="url(#comp)"/>
+</svg>

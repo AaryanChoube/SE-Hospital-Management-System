@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="450" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Level 2 DFD - Expansion of Process 5.0 (Billing &amp; Payment)</text>
+
+  <!-- Neighbour Stores (Left) -->
+  <path d="M 30 80 L 160 80 M 30 110 L 160 110" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="100" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1e293b">D3 Medical Records</text>
+
+  <path d="M 30 150 L 160 150 M 30 180 L 160 180" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="170" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1e293b">D4 Lab Tests Store</text>
+
+  <path d="M 30 220 L 160 220 M 30 250 L 160 250" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="240" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1e293b">D5 Drug Stock Store</text>
+
+  <!-- Subprocesses -->
+  <!-- 5.1 -->
+  <circle cx="280" cy="170" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="280" y="160" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">5.1 Aggregate</text>
+  <text x="280" y="178" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Total Costs</text>
+
+  <!-- 5.2 -->
+  <circle cx="480" cy="170" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="480" y="160" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">5.2 Insurance &amp;</text>
+  <text x="480" y="178" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Discounts</text>
+
+  <!-- 5.3 -->
+  <circle cx="680" cy="170" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="680" y="160" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">5.3 Process</text>
+  <text x="680" y="178" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Payment</text>
+
+  <!-- 5.4 -->
+  <circle cx="480" cy="380" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="480" y="370" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">5.4 Generate</text>
+  <text x="480" y="388" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Invoice &amp; Rcpt</text>
+
+  <!-- External Entities -->
+  <rect x="420" y="60" width="120" height="40" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="480" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+
+  <rect x="760" y="150" width="120" height="40" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="820" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Payment Gateway</text>
+
+  <path d="M 700 365 L 830 365 M 700 395 L 830 395" stroke="#334155" stroke-width="2"/>
+  <text x="765" y="385" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1e293b">D6 Invoices / Ledger</text>
+
+  <!-- Connections -->
+  <line x1="160" y1="95" x2="230" y2="150" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="160" y1="165" x2="230" y2="170" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="160" y1="235" x2="230" y2="190" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+  <line x1="330" y1="170" x2="430" y2="170" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="380" y="160" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">Subtotal</text>
+
+  <line x1="480" y1="100" x2="480" y2="120" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="530" y="112" font-family="Arial, sans-serif" font-size="9" fill="#0f172a">Policy No</text>
+
+  <line x1="530" y1="170" x2="630" y2="170" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="580" y="160" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">Net Bill</text>
+
+  <line x1="730" y1="170" x2="760" y2="170" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="680" y1="220" x2="525" y2="340" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="630" y="270" font-family="Arial, sans-serif" font-size="10" fill="#0369a1">Txn Success Token</text>
+
+  <line x1="530" y1="380" x2="700" y2="380" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="430" y1="380" x2="200" y2="380" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="200" y1="380" x2="440" y2="100" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="210" y="250" font-family="Arial, sans-serif" font-size="10" fill="#0369a1">Final Receipt to Patient</text>
+</svg>

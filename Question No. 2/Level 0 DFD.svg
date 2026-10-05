@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="520" viewBox="0 0 950 520">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  
+  <text x="475" y="32" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Level 0 DFD (Context Diagram) - Hospital Management System</text>
+  
+  <!-- Central Process -->
+  <circle cx="475" cy="270" r="90" fill="#f8fafc" stroke="#0284c7" stroke-width="3"/>
+  <text x="475" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0369a1">0</text>
+  <text x="475" y="270" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" fill="#0f172a">HOSPITAL</text>
+  <text x="475" y="292" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0f172a">MANAGEMENT</text>
+  <text x="475" y="312" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">SYSTEM (HMS)</text>
+
+  <!-- External Entities -->
+  <!-- Patient -->
+  <rect x="40" y="80" width="160" height="70" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="120" y="112" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+  <text x="120" y="132" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">(User/Visitor)</text>
+  
+  <!-- Receptionist -->
+  <rect x="40" y="370" width="160" height="70" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="120" y="405" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e293b">Receptionist</text>
+  <text x="120" y="425" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">(Front Desk Staff)</text>
+
+  <!-- Doctor -->
+  <rect x="750" y="80" width="160" height="70" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="830" y="112" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e293b">Doctor</text>
+  <text x="830" y="132" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">(Medical Staff)</text>
+
+  <!-- Pharmacist & Lab Tech -->
+  <rect x="750" y="370" width="160" height="70" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="830" y="402" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Pharmacist &amp;</text>
+  <text x="830" y="422" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Lab Technician</text>
+
+  <!-- Administrator (Top) -->
+  <rect x="395" y="60" width="160" height="55" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="475" y="93" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Administrator</text>
+
+  <!-- Payment Gateway (Bottom) -->
+  <rect x="395" y="440" width="160" height="55" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="475" y="473" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Payment Gateway</text>
+
+  <!-- Arrows & Dataflows -->
+  <!-- Patient to HMS -->
+  <path d="M 200 100 L 400 220" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="260" y="145" font-family="Arial, sans-serif" font-size="10" fill="#0f172a" transform="rotate(25, 260, 145)">Personal Info &amp; Appt Request</text>
+
+  <path d="M 390 245 L 200 135" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="250" y="195" font-family="Arial, sans-serif" font-size="10" fill="#0369a1" transform="rotate(25, 250, 195)">Appt Slip, Invoice &amp; Reports</text>
+
+  <!-- Recep to HMS -->
+  <path d="M 200 395 L 395 320" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="280" y="380" font-family="Arial, sans-serif" font-size="10" fill="#0f172a" transform="rotate(-18, 280, 380)">Registration &amp; Slot Config</text>
+
+  <path d="M 395 340 L 200 420" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="265" y="395" font-family="Arial, sans-serif" font-size="10" fill="#0369a1" transform="rotate(-18, 265, 395)">Doctor Schedules &amp; Bed Status</text>
+
+  <!-- Doctor to HMS -->
+  <path d="M 750 105 L 555 220" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="690" y="150" font-family="Arial, sans-serif" font-size="10" fill="#0f172a" transform="rotate(-25, 690, 150)">Diagnosis, Prescriptions &amp; Tests</text>
+
+  <path d="M 560 240 L 750 135" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="690" y="195" font-family="Arial, sans-serif" font-size="10" fill="#0369a1" transform="rotate(-25, 690, 195)">Patient History &amp; Appt Queue</text>
+
+  <!-- Pharmacy/Lab to HMS -->
+  <path d="M 750 395 L 555 320" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="680" y="375" font-family="Arial, sans-serif" font-size="10" fill="#0f172a" transform="rotate(18, 680, 375)">Stock Logs &amp; Lab Reports</text>
+
+  <path d="M 555 340 L 750 420" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="670" y="395" font-family="Arial, sans-serif" font-size="10" fill="#0369a1" transform="rotate(18, 670, 395)">Prescription Orders &amp; Test Req</text>
+
+  <!-- Admin to HMS -->
+  <path d="M 455 115 L 455 180" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 495 180 L 495 115" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="430" y="150" font-family="Arial, sans-serif" font-size="10" text-anchor="end" fill="#0f172a">Staff Config</text>
+  <text x="505" y="150" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#0369a1">MIS Reports</text>
+
+  <!-- HMS to PG -->
+  <path d="M 455 360 L 455 440" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 495 440 L 495 360" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="445" y="405" font-family="Arial, sans-serif" font-size="10" text-anchor="end" fill="#0f172a">Auth Req</text>
+  <text x="505" y="405" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#0369a1">Txn Status</text>
+</svg>

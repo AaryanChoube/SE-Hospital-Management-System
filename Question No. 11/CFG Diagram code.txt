@@ -1,0 +1,26 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+title Control Flow Graph (CFG) - calculateBill() Method [V(G) = 3]
+
+(*) --> "Node 1: Entry / if (fee == 0)"
+
+"Node 1: Entry / if (fee == 0)" --> "Node 2: return -1.0 (Error)" : [fee == 0] (T)
+"Node 2: return -1.0 (Error)" --> "Node 7: Exit / Return"
+
+"Node 1: Entry / if (fee == 0)" --> "Node 3: totalBill = fee + labCost" : [fee != 0] (F)
+
+"Node 3: totalBill = fee + labCost" --> "Node 4: if (hasIns || (isEmerg && totalBill > 5000))"
+
+"Node 4: if (hasIns || (isEmerg && totalBill > 5000))" --> "Node 5: totalBill = totalBill * 0.90" : [Condition TRUE]
+"Node 5: totalBill = totalBill * 0.90" --> "Node 6: return totalBill"
+
+"Node 4: if (hasIns || (isEmerg && totalBill > 5000))" --> "Node 6: return totalBill" : [Condition FALSE]
+
+"Node 6: return totalBill" --> "Node 7: Exit / Return"
+
+@enduml

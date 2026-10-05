@@ -1,0 +1,75 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign center
+
+title Sequence Diagram - Patient Consultation & Billing Lifecycle
+
+actor Patient as P
+participant ":PatientPortal" as UI
+participant ":AppointmentController" as AC
+participant ":DoctorScheduleDB" as DB
+participant ":ConsultationService" as CS
+participant ":BillingService" as BS
+participant ":PaymentGateway" as PG
+
+P -> UI : bookAppointment(doctorId, slot)
+activate UI
+UI -> AC : validateSlot(doctorId, slot)
+activate AC
+AC -> DB : queryAvailability(doctorId, slot)
+activate DB
+DB --> AC : slotAvailable: true
+deactivate DB
+
+AC -> DB : reserveSlot(appointmentId)
+activate DB
+DB --> AC : confirmed
+deactivate DB
+
+AC --> UI : appointmentConfirmed(tokenNo)
+deactivate AC
+UI --> P : displayConfirmation(tokenNo)
+deactivate UI
+
+== Consultation & Treatment Phase ==
+
+P -> CS : attendConsultation(tokenNo)
+activate CS
+CS -> CS : recordDiagnosis()
+CS -> BS : submitCharges(fee, labCost, meds)
+activate BS
+BS --> CS : chargesAcknowledged
+deactivate BS
+CS --> P : consultationComplete
+deactivate CS
+
+== Billing & Checkout Phase ==
+
+P -> UI : requestBillCheckout()
+activate UI
+UI -> BS : calculateBill(fee, labCost, hasIns, isEmerg)
+activate BS
+BS -> BS : applyDiscountRules()
+BS --> UI : totalPayableAmount
+deactivate BS
+
+UI -> P : promptPaymentOptions()
+P -> UI : submitPayment(mode, token)
+UI -> PG : processTransaction(amount, token)
+activate PG
+PG --> UI : paymentStatus: SUCCESS (authTxnId)
+deactivate PG
+
+UI -> BS : markBillPaid(billId, authTxnId)
+activate BS
+BS --> UI : invoiceGenerated(pdfReceipt)
+deactivate BS
+
+UI --> P : downloadReceipt()
+deactivate UI
+
+@enduml

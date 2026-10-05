@@ -1,0 +1,54 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 1.5
+}
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 2
+}
+
+title Level 2 DFD - Decomposition of Process 5.0 (Billing & Payment Processing)
+
+' ===== External Entities =====
+rectangle "Patient" as Patient
+rectangle "Payment Gateway" as PG
+
+' ===== Neighbouring Data Stores =====
+database "D3: Medical Records (Consultation)" as D3
+database "D4: Lab Reports (Lab Charges)" as D4
+database "D5: Pharmacy Stock (Medicine Charges)" as D5
+database "D6: Invoices & Accounts Ledger" as D6
+
+' ===== Sub-processes =====
+usecase "5.1\nAggregate Service\nCharges" as P51
+usecase "5.2\nVerify Insurance &\nApply Discounts" as P52
+usecase "5.3\nProcess Transaction\n(Counter/Online)" as P53
+usecase "5.4\nGenerate Invoice &\nUpdate Ledger" as P54
+
+' ===== Flows =====
+D3 --> P51 : Doctor Consultation Fee
+D4 --> P51 : Diagnostic Test Costs
+D5 --> P51 : Dispensed Medicine Bill
+P51 --> P52 : Subtotal Bill Amount
+
+Patient --> P52 : Insurance Policy / Co-pay Details
+P52 --> P53 : Net Amount Payable (after discount)
+
+Patient --> P53 : Payment Mode (Cash / UPI / Card)
+P53 --> PG : Transmit Payment Token
+PG --> P53 : Transaction Status (Approved / Failed)
+
+P53 --> P54 : Payment Success Confirmation
+P54 --> D6 : Record Paid Invoice & Receipt
+P54 --> Patient : Itemized Final Bill & Payment Receipt
+
+@enduml

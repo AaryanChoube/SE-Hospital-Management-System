@@ -1,0 +1,84 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 1.5
+}
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 2
+}
+
+title Level 1 DFD - Hospital Management System (HMS)
+
+' ===== External Entities =====
+rectangle "Patient" as Patient
+rectangle "Receptionist / Front Desk" as Recep
+rectangle "Doctor" as Doctor
+rectangle "Pharmacist" as Pharm
+rectangle "Laboratory Technician" as LabTech
+rectangle "Hospital Administrator" as Admin
+rectangle "Payment Gateway" as PG
+
+' ===== Processes =====
+usecase "1.0\nPatient Registration\n& Appointment" as P1
+usecase "2.0\nDoctor Consultation\n& EHR Management" as P2
+usecase "3.0\nLaboratory &\nDiagnostic Tests" as P3
+usecase "4.0\nPharmacy &\nStock Inventory" as P4
+usecase "5.0\nBilling &\nPayment Processing" as P5
+usecase "6.0\nHospital Admin &\nSystem Reports" as P6
+
+' ===== Data Stores =====
+database "D1: Patient Master Store" as D1
+database "D2: Appointment Schedule" as D2
+database "D3: Medical Records & EHR" as D3
+database "D4: Lab Reports Store" as D4
+database "D5: Pharmacy Inventory" as D5
+database "D6: Invoices & Billing Store" as D6
+database "D7: Staff & Audit Log" as D7
+
+' ===== Data Flows =====
+Patient --> P1 : Personal Info, Preferred Slot
+Recep --> P1 : Verify Patient Details
+P1 --> D1 : Write Patient Record
+P1 --> D2 : Book Time Slot
+D2 --> P1 : Availability Status
+P1 --> Patient : Appointment Slip
+
+Doctor --> P2 : Examination Findings, Prescription
+D1 --> P2 : Read Patient Medical History
+P2 --> D3 : Store Diagnosis & Prescriptions
+P2 --> P3 : Lab Investigation Order
+P2 --> P4 : Prescription Order
+
+LabTech --> P3 : Upload Test Results
+P3 --> D4 : Store Diagnostic Reports
+D4 --> Patient : Download Lab Report
+
+Pharm --> P4 : Update Drug Quantities
+D5 --> P4 : Stock Availability
+P4 --> D5 : Deduct Dispensed Stock
+P4 --> Patient : Dispense Medicine
+
+P2 --> P5 : Consultation Charges
+P3 --> P5 : Diagnostic Charges
+P4 --> P5 : Medicine Bill Items
+P5 --> PG : Transaction Authorization
+PG --> P5 : Payment Confirmation
+P5 --> D6 : Save Invoice & Payment Status
+P5 --> Patient : Itemized Bill & Receipt
+
+Admin --> P6 : System Configuration & Queries
+D1 --> P6 : Patient Stats
+D6 --> P6 : Financial Ledger
+P6 --> D7 : System Audit Trail
+P6 --> Admin : MIS & Occupancy Reports
+
+@enduml

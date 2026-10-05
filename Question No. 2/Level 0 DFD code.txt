@@ -1,0 +1,48 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 1.5
+}
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 2
+}
+
+title Level 0 DFD (Context Diagram) - Hospital Management System (HMS)
+
+rectangle "Patient" as Patient
+rectangle "Receptionist / Admin" as Recep
+rectangle "Doctor" as Doctor
+rectangle "Pharmacist" as Pharm
+rectangle "Laboratory Technician" as LabTech
+rectangle "Payment Gateway" as PG
+
+usecase "0\nHospital\nManagement\nSystem (HMS)" as SYS
+
+Patient -right-> SYS : Patient Details, Appointment Request, Payment
+SYS -left-> Patient : Booking Confirmation, Invoice/Receipt, Prescriptions, Lab Reports
+
+Recep -down-> SYS : Patient Registration, Doctor Shift Config
+SYS -up-> Recep : Patient Records, Daily Schedule, Bed Status
+
+Doctor -left-> SYS : Clinical Diagnosis, Electronic Prescriptions, Lab Orders
+SYS -right-> Doctor : Patient Medical History, Daily Appointment Queue
+
+Pharm -up-> SYS : Dispensing Logs, Medicine Stock Updates
+SYS -down-> Pharm : Prescription Orders, Drug Low-Stock Alerts
+
+LabTech -up-> SYS : Diagnostic Test Reports
+SYS -down-> LabTech : Lab Test Requests & Patient Specimen Data
+
+SYS -right-> PG : Transaction Request (Amount, Card/UPI Details)
+PG -left-> SYS : Payment Status (Success / Failed Token)
+
+@enduml

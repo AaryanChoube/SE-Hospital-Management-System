@@ -1,0 +1,74 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+title Activity Diagram - Hospital Management System (Patient Flow & Billing)
+
+|Patient|
+start
+:Fill Registration Details;
+
+|Receptionist|
+:Verify Identity & Register;
+:Check Doctor Availability;
+
+if (Slot Available?) then (Yes)
+  :Issue Appointment Token;
+else (No)
+  :Propose Alternate Slot;
+  if (Patient Accepts?) then (Yes)
+    :Issue Appointment Token;
+  else (No)
+    :Cancel Booking;
+    stop
+  endif
+endif
+
+|Doctor|
+:Examine Patient & Vitals;
+:Enter Diagnosis in EHR;
+
+fork
+  :Order Diagnostic Lab Tests;
+  |Diagnostic Lab|
+  :Collect Specimen Sample;
+  :Analyze & Upload Lab Report;
+fork again
+  :Write Electronic Prescription;
+  |Pharmacy|
+  :Verify Medicine Stock;
+  :Dispense Prescribed Drugs;
+end fork
+
+|Billing System|
+:Aggregate Consultation, Lab & Drug Costs;
+:Execute calculateBill();
+
+if (Has Insurance OR (Emergency AND Bill > 5000)?) then (Yes)
+  :Apply Discount / Co-pay Waiver;
+else (No)
+  :Retain Standard Gross Amount;
+endif
+
+|Patient|
+:Choose Payment Mode (Card / UPI / Cash);
+:Authorize Payment Transaction;
+
+|Billing System|
+if (Payment Successful?) then (Yes)
+  :Update Ledger to PAID;
+  :Generate Itemized Invoice & Receipt;
+  |Patient|
+  :Collect Receipt & Discharged;
+  stop
+else (No)
+  :Flag Transaction Failed;
+  |Patient|
+  :Retry Payment with Alternate Mode;
+  detach
+endif
+
+@enduml

@@ -1,0 +1,2423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Management System (HMS) - SE Practical & Viva Kit</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --card: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --border: #475569;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+    
+    /* Sidebar */
+    aside { width: 320px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
+    .brand { padding: 18px 20px; border-bottom: 1px solid var(--border); }
+    .brand h1 { font-size: 1.15rem; color: #38bdf8; font-weight: 700; }
+    .brand p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+    
+    .nav-list { overflow-y: auto; flex: 1; padding: 12px 10px; }
+    .nav-item { display: block; width: 100%; text-align: left; padding: 10px 14px; margin-bottom: 4px; background: transparent; border: none; border-radius: 6px; color: var(--text-muted); font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+    .nav-item:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+    .nav-item.active { background: var(--primary); color: #fff; font-weight: 600; }
+    
+    .quick-download { padding: 16px; border-top: 1px solid var(--border); }
+    .btn-zip { display: block; width: 100%; text-align: center; padding: 10px; background: var(--accent); color: #022c22; font-weight: 700; text-decoration: none; border-radius: 6px; font-size: 0.9rem; transition: opacity 0.2s; }
+    .btn-zip:hover { opacity: 0.9; }
+
+    /* Main Content */
+    main { flex: 1; overflow-y: auto; padding: 30px 40px; display: flex; flex-direction: column; gap: 24px; }
+    .header-bar { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    .header-bar h2 { font-size: 1.6rem; color: #fff; }
+    .header-bar p { font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; }
+    .actions { display: flex; gap: 10px; }
+    .btn { padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: #475569; }
+    .btn-copy { background: #059669; color: #fff; }
+    
+    .panel { display: none; flex-direction: column; gap: 24px; }
+    .panel.active { display: flex; }
+    
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 22px; }
+    .card h3 { font-size: 1.15rem; color: #38bdf8; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; }
+    
+    .diagram-container { background: #ffffff; border-radius: 8px; padding: 16px; overflow-x: auto; display: flex; justify-content: center; align-items: center; min-height: 250px; border: 1px solid #cbd5e1; }
+    .diagram-container svg { max-width: 100%; height: auto; }
+    
+    .code-box { position: relative; margin-top: 14px; }
+    pre { background: #0b1120; padding: 16px; border-radius: 6px; overflow-x: auto; font-family: "Consolas", monospace; font-size: 0.85rem; color: #e2e8f0; border: 1px solid #1e293b; max-height: 350px; }
+    .copy-btn { position: absolute; top: 10px; right: 10px; padding: 6px 12px; font-size: 0.75rem; font-weight: bold; background: var(--primary); color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    .copy-btn:hover { background: var(--primary-dark); }
+    
+    /* Markdown / Text preview */
+    .md-content { line-height: 1.65; color: #cbd5e1; font-size: 0.95rem; }
+    .md-content h2 { color: #38bdf8; font-size: 1.25rem; margin: 20px 0 10px 0; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .md-content h3 { color: #a5f3fc; font-size: 1.05rem; margin: 16px 0 6px 0; }
+    .md-content strong { color: #fff; }
+    .md-content ul { padding-left: 20px; margin-bottom: 12px; }
+    .md-content li { margin-bottom: 6px; }
+    .badge { display: inline-block; padding: 3px 8px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside>
+    <div class="brand">
+      <h1>🏥 HMS Practical Kit</h1>
+      <p>3rd Year SE Practical & Viva</p>
+      <p style="font-size: 0.75rem; color: #38bdf8; margin-top: 2px;">Batch A/A1 • 24CE1045 Aaryan</p>
+    </div>
+    <div class="nav-list">
+      <button class="nav-item active" onclick="showTab('tab-viva')">🌟 Master Viva Guide (27 Q&A)</button>
+      <button class="nav-item" onclick="showTab('tab-exp1')">Exp 1: Problem & V-Model</button>
+      <button class="nav-item" onclick="showTab('tab-exp2')">Exp 2: SRS Document</button>
+      <button class="nav-item" onclick="showTab('tab-dfd')">Exp 3: DFD (L0, L1, L2)</button>
+      <button class="nav-item" onclick="showTab('tab-gantt')">Exp 4: Gantt Chart (47 Days)</button>
+      <button class="nav-item" onclick="showTab('tab-scrum')">Exp 5: Scrum & JIRA Log</button>
+      <button class="nav-item" onclick="showTab('tab-usecase')">Exp 6: Use Case & Class</button>
+      <button class="nav-item" onclick="showTab('tab-activity')">Exp 7: Activity Diagram</button>
+      <button class="nav-item" onclick="showTab('tab-seq')">Exp 8: Sequence & Collab</button>
+      <button class="nav-item" onclick="showTab('tab-cohesion')">Exp 9: Cohesion & Coupling</button>
+      <button class="nav-item" onclick="showTab('tab-rmmm')">Exp 10: RMMM Risk Plan</button>
+      <button class="nav-item" onclick="showTab('tab-scm')">Exp 11: SCM & Git Control</button>
+      <button class="nav-item" onclick="showTab('tab-whitebox')">Exp 12: White-Box Testing</button>
+    </div>
+    <div class="quick-download">
+      <a href="https://github.com/AaryanChoube/SE-Hospital-Management-System/archive/refs/heads/main.zip" target="_blank" class="btn-zip">⬇️ Download Entire Kit (ZIP)</a>
+      <p style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">Zero Login • Direct ZIP on Lab PC</p>
+    </div>
+  </aside>
+
+  <!-- Main Area -->
+  <main>
+
+    <!-- TAB: MASTER VIVA GUIDE -->
+    <div id="tab-viva" class="panel active">
+      <div class="header-bar">
+        <div>
+          <h2>🌟 Master Viva Preparation Guide</h2>
+          <p>Every single question external examiners ask about Hospital Management System (HMS)</p>
+        </div>
+        <div class="actions">
+          <a href="00_HMS_MASTER_VIVA_PRACTICAL_CHEAT_SHEET/HMS_VIVA_MASTER_CHEAT_SHEET.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="00_HMS_MASTER_VIVA_PRACTICAL_CHEAT_SHEET/HMS_VIVA_MASTER_CHEAT_SHEET.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="md-content">
+          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; padding: 14px; border-radius: 6px; margin-bottom: 20px;">
+            <strong style="color: #10b981;">💡 Quick Viva Golden Points:</strong>
+            <ul style="margin: 8px 0 0 16px;">
+              <li><strong>Why V-Model?</strong> Clinical requirements frozen early in IEEE 830 SRS, safety-critical medical domain requires parallel verification/test planning.</li>
+              <li><strong>Critical Path:</strong> A ➔ B ➔ C ➔ D ➔ F ➔ I ➔ J ➔ K = <strong>47 Days</strong> (Zero Slack).</li>
+              <li><strong>Class Diagram:</strong> Aggregation = <code>Department o-- Doctor</code>; Composition = <code>MedicalRecord *-- Prescription</code>.</li>
+              <li><strong>White-Box Testing:</strong> Method <code>calculateBill()</code> has Cyclomatic Complexity $V(G) = 3$ with 3 independent basis paths.</li>
+            </ul>
+          </div>
+          <pre style="white-space: pre-wrap; font-family: inherit; font-size: 0.95rem; background: transparent; border: none; max-height: none;"># Software Engineering (SE) Master Viva & Practical Guide
+## Project: Hospital Management System (HMS)
+**Team Members:** Anish Chitnis (24CE1044), Aaryan Choube (24CE1045), Somansh Dafade (24CE1047)  
+**Batch:** A / A1 | **Department:** Computer Engineering, RAIT, DY Patil University  
+
+---
+
+## 🏥 SECTION 1: HMS PROJECT DOMAIN & ARCHITECTURE OVERVIEW
+
+### Q1: What is the Hospital Management System (HMS)?
+**Ans:** HMS is an integrated, web-based healthcare enterprise platform designed to automate clinical, diagnostic, pharmaceutical, and financial workflows in a multi-specialty hospital. It replaces paper ledgers with a centralized relational database and role-based access for patients, doctors, receptionists, pharmacists, lab technicians, and hospital administrators.
+
+### Q2: What is the System Architecture of HMS?
+**Ans:** HMS follows a **3-Tier Client-Server Architecture**:
+1. **Presentation Layer (Frontend):** Responsive Web UI built using HTML5/React/CSS, enabling role-specific dashboards.
+2. **Application / Business Logic Layer (Backend):** RESTful Web Services (Spring Boot / Node.js) implementing business rules, appointment scheduling, and automated billing logic (`calculateBill`).
+3. **Data Storage Layer (Database):** Relational Database (MySQL / PostgreSQL) storing 7 core data stores (Patient Master, Schedules, EHR, Lab Reports, Pharmacy Stock, Billing Ledgers, Audit Logs).
+
+### Q3: Who are the Primary Actors / Stakeholders?
+- **Patient:** Registers, views doctor slots, books appointments, accesses digital prescriptions and lab reports, pays bills online.
+- **Receptionist:** Registers walk-in patients, issues queue tokens, verifies doctor availability, manages bed/ward admissions.
+- **Doctor:** Reviews patient history, records clinical diagnoses, issues electronic prescriptions, orders laboratory tests.
+- **Pharmacist:** Verifies digital prescriptions, dispenses medicines, updates drug inventory, monitors low-stock alerts.
+- **Laboratory Technician:** Receives test requisitions, collects specimen samples, uploads diagnostic test results.
+- **Hospital Administrator:** Configures staff accounts, manages role-based access control (RBAC), views hospital occupancy and revenue MIS reports.
+- **Payment Gateway (External Entity):** Authorizes digital payments (UPI, Cards, Net Banking) and returns transaction status tokens.
+
+---
+
+## 🔄 SECTION 2: PROCESS MODEL & PROBLEM STATEMENT (EXPERIMENT 1 & 2)
+
+### Q4: What problems existed in the manual hospital system?
+1. **Long Queues & Scheduling Chaos:** Manual token counters and appointment overlapping.
+2. **Fragmented & Misplaced Medical Charts:** Paper records lost or delayed during cross-department emergencies.
+3. **Pharmacy Inventory Mismatches:** Unrecorded dispensing leading to stockouts of life-saving medicines and expired batch waste.
+4. **Billing Inaccuracies & Revenue Leakage:** Disconnect between lab tests, pharmacy, and cashier desks leading to under-billing or delayed discharge.
+5. **No Auditability:** Lack of security logs for sensitive patient health data.
+
+### Q5: Why did you choose the V-Model instead of Waterfall or pure Agile?
+**Ans (Crucial Viva Justification):**
+1. **Well-Defined, Stable Requirements:** Healthcare administration workflows follow standardized institutional protocols frozen upfront in the IEEE 830 SRS document.
+2. **Correctness-Critical Healthcare Domain:** Medical errors or billing glitches carry legal liability and patient health risks. The V-Model enforces **parallel verification and validation planning**:
+   - *Requirements Phase* ➔ Plans *Acceptance Testing*
+   - *System Architecture Phase* ➔ Plans *System Testing*
+   - *High-Level Design Phase* ➔ Plans *Integration Testing*
+   - *Module Design Phase* ➔ Plans *Unit / Basis Path Testing*
+3. **1-to-1 Traceability:** Every functional requirement (FR-1 to FR-6) maps directly to a verification test case.
+4. **Semester Academic Timeline:** Fixed milestone reviews align naturally with the deterministic phases of the V-Model.
+
+### Q6: What is the IEEE 830 Standard for SRS?
+**Ans:** IEEE 830 specifies the structure of a Software Requirements Specification:
+1. Introduction (Purpose, Scope, Definitions, References)
+2. Overall Description (Product perspective, user classes, operating environment, design constraints)
+3. Specific Requirements (External interfaces, Functional Requirements FR-x, Non-Functional Requirements: Security, HIPAA Compliance, Performance, Reliability)
+
+---
+
+## 📊 SECTION 3: DATA FLOW DIAGRAMS & DATA DICTIONARY (EXPERIMENT 3)
+
+### Q7: What are the DFD Notations used?
+- **External Entity:** Rectangle (Source/sink outside system: Patient, Doctor, Gateway).
+- **Process:** Circle / Rounded Rectangle (Transforms data: `1.0 Patient Registration`).
+- **Data Store:** Open rectangle / Parallel lines (Holds data: `D1 Patient Master`).
+- **Data Flow:** Directed arrow (Carries data packets).
+
+### Q8: What are the strict Rules of DFD?
+1. **No Entity-to-Entity direct flow:** Data must be processed by a system process.
+2. **No Entity-to-Store direct flow:** Cannot read/write a database directly without a process.
+3. **No Store-to-Store direct flow:** Data movement requires a computational process.
+4. **Conservation of Data:** A process cannot produce output without necessary input data (no "miracles" or "black holes").
+
+### Q9: Explain Level 0, Level 1, and Level 2 DFD of HMS.
+- **Level 0 (Context Diagram):** System represented as single process `0: Hospital Management System`, interacting with 6 external entities.
+- **Level 1 DFD:** Decomposed into 6 core processes:
+  - `1.0` Patient Registration & Appointment
+  - `2.0` Doctor Consultation & EHR
+  - `3.0` Laboratory & Diagnostics
+  - `4.0` Pharmacy & Stock Inventory
+  - `5.0` Billing & Payment Processing
+  - `6.0` Hospital Administration & Reporting
+  - Along with 7 Data Stores (`D1` to `D7`).
+- **Level 2 DFD:** Expands Process `5.0 (Billing & Payment)` into 4 sub-processes:
+  - `5.1` Aggregate Service Charges (from D3 EHR, D4 Lab, D5 Pharmacy)
+  - `5.2` Verify Insurance & Apply Discounts
+  - `5.3` Process Payment Transaction (Counter cash or Payment Gateway)
+  - `5.4` Generate Itemized Invoice & Update Ledger (writes D6)
+
+### Q10: What is a Data Dictionary?
+**Ans:** A repository containing metadata about all data elements, composite flows, and stores. Uses BNF notation:
+- `+` = AND (Concatenation)
+- `[ | ]` = OR (Selection)
+- `{}` = Iteration (Zero or more occurrences)
+- `()` = Optional data element
+
+---
+
+## ⏱️ SECTION 4: PROJECT SCHEDULING (GANTT CHART & PERT/CPM) (EXPERIMENT 4)
+
+### Q11: What is the difference between PERT and CPM?
+- **CPM (Critical Path Method):** Deterministic technique used when task durations are known with certainty (e.g., standard software development). Focuses on cost-time trade-offs.
+- **PERT (Program Evaluation and Review Technique):** Probabilistic technique used for research/R&D projects where durations are uncertain. Uses 3 time estimates:
+  $$	ext{Expected Time } T_e = rac{a + 4m + b}{6}$$
+  where $a$ = optimistic time, $m$ = most likely time, $b$ = pessimistic time.
+
+### Q12: What is the Critical Path and Total Project Duration for HMS?
+- **Total Duration:** **47 Working Days**.
+- **Critical Path:** **A ➔ B ➔ C ➔ D ➔ F ➔ I ➔ J ➔ K**
+  - A: Requirement Analysis (5d)
+  - B: SRS IEEE 830 Preparation (4d)
+  - C: System Design DFD/UML (6d)
+  - D: Database Design & Schema (5d)
+  - F: Patient Registration & Appointment Module (9d)
+  - I: Billing & Payment Gateway Integration (9d)
+  - J: Integration & White-Box Testing (6d)
+  - K: Deployment & User Training (3d)
+- **Total Float on Critical Path:** **0 Days** (Zero Slack). Any delay on these tasks directly delays the entire 47-day delivery.
+
+---
+
+## 🏃 SECTION 5: AGILE SCRUM & JIRA PROJECT MANAGEMENT (EXPERIMENT 5)
+
+### Q13: What are the key Scrum Roles and Events?
+- **Roles:**
+  - **Product Owner (PO):** Defines user stories, maintains and prioritizes Product Backlog.
+  - **Scrum Master (SM):** Serves the team, removes impediments, ensures Scrum adherence.
+  - **Development Team:** Cross-functional professionals who build and test increments.
+- **Events (Ceremonies):**
+  - **Sprint Planning:** Select stories from Product Backlog to form the Sprint Backlog.
+  - **Daily Scrum (Standup):** 15-minute daily sync (Yesterday, Today, Blockers).
+  - **Sprint Review:** Demo of working software increment to stakeholders.
+  - **Sprint Retrospective:** Team inspects its own processes to improve next sprint.
+
+### Q14: How many Sprints did HMS have?
+**Ans:** **5 Sprints** (each ~2 weeks / 9–10 days):
+- Sprint 1: Setup, Auth, RBAC & Patient Registration (18 story points)
+- Sprint 2: Doctor Schedule & Appointment Booking (21 story points)
+- Sprint 3: Doctor EHR, Clinical Notes & Diagnostics (19 story points)
+- Sprint 4: Automated Billing, Insurance Discount & Payment Gateway (23 story points)
+- Sprint 5: White-Box Testing, Security Audits & Deployment (15 story points)
+
+---
+
+## 📐 SECTION 6: UML MODELING (USE CASE, CLASS, ACTIVITY, SEQUENCE, COLLABORATION)
+
+### Q15: What is the difference between `&lt;&lt;include&gt;&gt;` and `&lt;&lt;extend&gt;&gt;`?
+- **`&lt;&lt;include&gt;&gt;` (Mandatory Dependency):** The base use case *cannot* complete without executing the included use case.
+  - *Example in HMS:* `Book Appointment` **&lt;&lt;include&gt;&gt;** `Verify Doctor Availability`.
+  - *Example in HMS:* `Calculate Total Bill` **&lt;&lt;include&gt;&gt;** `Process Payment Transaction`.
+- **`&lt;&lt;extend&gt;&gt;` (Optional / Conditional Dependency):** The extending use case executes only under specific conditions (extension points).
+  - *Example in HMS:* `Cancel / Reschedule Appointment` **&lt;&lt;extend&gt;&gt;** `Book Appointment` (triggered only if patient desires change).
+  - *Example in HMS:* `Apply Health Insurance Discount` **&lt;&lt;extend&gt;&gt;** `Calculate Total Bill` (triggered only for insured patients).
+
+### Q16: Explain Aggregation vs. Composition in the HMS Class Diagram.
+- **Aggregation (Hollow Diamond `o--`):** Weak "has-a" ownership. If the whole is destroyed, the parts still exist.
+  - *HMS Example:* `Department o-- Doctor`. A Department has Doctors. If a Department is closed or reorganized, the Doctor objects still exist in the hospital.
+- **Composition (Filled Diamond `*--`):** Strong "contains" lifecycle ownership. If the whole is destroyed, the parts are destroyed with it.
+  - *HMS Example:* `MedicalRecord *-- Prescription`. A Prescription cannot exist independently without a parent Medical Record.
+  - *HMS Example:* `Bill *-- BillItem`. Individual itemized charge lines have no meaning without the parent Bill.
+
+### Q17: What are Swimlanes, Fork, and Join in the Activity Diagram?
+- **Swimlanes:** Partitions showing actor responsibility (Patient, Receptionist, Doctor, Pharmacy/Lab, Billing System).
+- **Fork (Thick Bar):** Splits single control flow into two or more **concurrent/parallel** flows.
+  - *HMS Example:* After Doctor diagnosis, the flow forks into **Branch 1 (Conduct Diagnostic Lab Test)** and **Branch 2 (Verify & Dispense Medicines)** simultaneously.
+- **Join (Thick Bar):** Synchronizes multiple parallel flows back into a single thread. Billing execution waits for both lab reports and pharmacy dispensation to complete before computing the final bill.
+
+### Q18: Compare Sequence Diagram vs Collaboration Diagram.
+| Feature | Sequence Diagram | Collaboration (Communication) Diagram |
+| :--- | :--- | :--- |
+| **Primary Focus** | **Time sequence** of interactions | **Structural links** between objects |
+| **Lifelines** | Explicit vertical dashed lifelines | No lifelines (objects represented as rectangles) |
+| **Message Ordering** | Implicit (top-to-bottom time axis) | Explicit **numbered messages** (`1:`, `2:`, `3:`) |
+| **Usage** | Best for tracing operational execution | Best for evaluating impact of structural refactoring |
+
+---
+
+## 🧩 SECTION 7: COHESION AND COUPLING (EXPERIMENT 9)
+
+### Q19: What is Cohesion? What are its types from Best to Worst?
+**Ans:** Cohesion measures the degree to which elements within a single module belong together (Intra-module strength). High cohesion is desired.
+1. **Functional Cohesion (BEST):** Module performs exactly one single, well-defined mathematical/business task (e.g., `Patient Registration`, `calculateBill`).
+2. **Sequential Cohesion:** Output of one statement is input to the next (e.g., Aggregating bill components then calculating tax).
+3. **Communicational Cohesion:** Operates on the same input data set.
+4. **Procedural Cohesion:** Order of execution matters.
+5. **Temporal Cohesion:** Operations executed at the same time (e.g., system startup initialization).
+6. **Logical Cohesion:** Related by category (e.g., all input routines in one class).
+7. **Coincidental Cohesion (WORST):** Arbitrary functions bundled together without meaningful relation.
+
+### Q20: What is Coupling? What are its types from Best to Worst?
+**Ans:** Coupling measures the degree of interdependence between two software modules (Inter-module connectivity). Low/loose coupling is desired.
+1. **Data Coupling (BEST):** Modules communicate solely by passing atomic data parameters (e.g., `calculateBill(fee, labCost, hasIns, isEmerg)`).
+2. **Stamp Coupling:** Passing composite data structures when only part of the data is needed.
+3. **Control Coupling:** One module passes flags/parameters controlling the internal execution logic of another.
+4. **External Coupling:** Modules depend on external formatting/protocols.
+5. **Common Coupling:** Modules share global data/variables.
+6. **Content Coupling (WORST):** One module directly modifies or accesses the internal data of another.
+
+---
+
+## 🛡️ SECTION 8: RMMM PLAN (RISK MANAGEMENT) (EXPERIMENT 10)
+
+### Q21: What is the full form of RMMM and Risk Exposure formula?
+- **RMMM:** **R**isk **M**itigation, **M**onitoring, and **M**anagement.
+- **Risk Exposure:**
+  $$	ext{Risk Exposure (RE)} = 	ext{Probability } (P) 	imes 	ext{Impact } (I)$$
+
+### Q22: What are the 3 pillars of RMMM?
+1. **Risk Mitigation (Proactive):** Steps taken before risk occurs to minimize probability (e.g., automated daily backups, role-based access).
+2. **Risk Monitoring:** Tracking risk indicators continuously during development (e.g., gateway API error logs, sprint burndown slippage).
+3. **Risk Management / Contingency (Reactive):** Action plan executed when the risk actually manifests (e.g., fallback to manual counter receipt entry if payment gateway crashes).
+
+---
+
+## 🏷️ SECTION 9: SCM & GIT VERSION CONTROL (EXPERIMENT 11)
+
+### Q23: What is a Configuration Item (CI) and Baseline?
+- **Configuration Item (CI):** Any work product formally placed under version control (SRS, DFD/UML diagrams, DDL database schemas, source code, test cases).
+- **Baseline:** A formally reviewed and approved version of a CI that serves as the basis for further development, modified only through formal change control.
+
+### Q24: What is the Change Control Board (CCB) process?
+1. Stakeholder submits a **Change Request (CR)**.
+2. Technical team conducts **Impact Analysis** (cost, schedule, architectural regression).
+3. **CCB (Change Control Board)** approves, rejects, or defers the CR.
+4. If approved, an engineer checks out the code, implements changes on a branch, runs regression tests, and tags a new baseline.
+
+---
+
+## 🧪 SECTION 10: WHITE-BOX TESTING & CYCLOMATIC COMPLEXITY (EXPERIMENT 12)
+
+### Q25: Explain the method under test: `calculateBill()`
+```java
+public class HospitalBillingTest {
+    public static double calculateBill(double fee, double labCost, boolean hasIns, boolean isEmerg) {
+        if (fee == 0) {                                  // Node 1 (Predicate 1)
+            return -1.0;                                 // Node 2 (Error Return)
+        }
+        double totalBill = fee + labCost;                // Node 3 (Sequential Statement)
+        if (hasIns || (isEmerg && totalBill &gt; 5000)) {   // Node 4 (Predicate 2)
+            totalBill = totalBill * 0.90;                // Node 5 (Apply 10% Discount)
+        }
+        return totalBill;                                // Node 6 (Return Final Bill)
+    }                                                    // Node 7 (Exit)
+}
+```
+
+### Q26: What is McCabe's Cyclomatic Complexity? Show calculation for HMS.
+**Ans:** Cyclomatic Complexity $V(G)$ defines the upper bound on the number of linearly independent paths through program logic:
+- **Graph Metrics:**
+  - Nodes $N = 7$
+  - Edges $E = 8$
+  - Connected Components $P = 1$
+  - Predicate Nodes $P_n = 2$ (Node 1 and Node 4)
+  - Closed Regions $R = 2$
+- **3 Verification Methods:**
+  1. **Method 1:** $V(G) = E - N + 2P = 8 - 7 + 2(1) = \mathbf{3}$
+  2. **Method 2:** $V(G) = P_n + 1 = 2 + 1 = \mathbf{3}$
+  3. **Method 3:** $V(G) = 	ext{Closed Regions} + 1 = 2 + 1 = \mathbf{3}$
+
+### Q27: What are the 3 Independent Basis Paths and their Test Cases?
+1. **Basis Path 1:** $1 
+ightarrow 2$
+   - **Inputs:** `fee = 0.0, labCost = 1000.0, hasIns = false, isEmerg = false`
+   - **Expected Output:** `-1.0` (Invalid input error) | **Actual:** `-1.0` | **Status:** PASSED [OK]
+2. **Basis Path 2:** $1 
+ightarrow 3 
+ightarrow 4 
+ightarrow 5 
+ightarrow 6 
+ightarrow 7$
+   - **Inputs:** `fee = 2000.0, labCost = 3000.0, hasIns = true, isEmerg = false`
+   - **Expected Output:** `4500.0` (10% discount on 5000) | **Actual:** `4500.0` | **Status:** PASSED [OK]
+3. **Basis Path 3:** $1 
+ightarrow 3 
+ightarrow 4 
+ightarrow 6 
+ightarrow 7$
+   - **Inputs:** `fee = 1500.0, labCost = 500.0, hasIns = false, isEmerg = false`
+   - **Expected Output:** `2000.0` (Gross bill, no discount) | **Actual:** `2000.0` | **Status:** PASSED [OK]
+- **Coverage:** **100% Statement Coverage, 100% Branch Coverage, and 100% Basis Path Coverage.**
+</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 3 DFD -->
+    <div id="tab-dfd" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>📊 Data Flow Diagrams (Level 0, Level 1 & Level 2)</h2>
+          <p>Experiment 3: Functional Data Flows, Processes & Data Dictionary</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 2/Experiment_2_DFD_Hospital_Management_System.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 2/Experiment_2_DFD_Hospital_Management_System.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3>Level 0 DFD (Context Diagram)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="950" height="520" viewBox="0 0 950 520">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  
+  <text x="475" y="32" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Level 0 DFD (Context Diagram) - Hospital Management System</text>
+  
+  <!-- Central Process -->
+  <circle cx="475" cy="270" r="90" fill="#f8fafc" stroke="#0284c7" stroke-width="3"/>
+  <text x="475" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0369a1">0</text>
+  <text x="475" y="270" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" fill="#0f172a">HOSPITAL</text>
+  <text x="475" y="292" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0f172a">MANAGEMENT</text>
+  <text x="475" y="312" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">SYSTEM (HMS)</text>
+
+  <!-- External Entities -->
+  <!-- Patient -->
+  <rect x="40" y="80" width="160" height="70" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="120" y="112" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+  <text x="120" y="132" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">(User/Visitor)</text>
+  
+  <!-- Receptionist -->
+  <rect x="40" y="370" width="160" height="70" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="120" y="405" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e293b">Receptionist</text>
+  <text x="120" y="425" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">(Front Desk Staff)</text>
+
+  <!-- Doctor -->
+  <rect x="750" y="80" width="160" height="70" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="830" y="112" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e293b">Doctor</text>
+  <text x="830" y="132" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">(Medical Staff)</text>
+
+  <!-- Pharmacist & Lab Tech -->
+  <rect x="750" y="370" width="160" height="70" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="830" y="402" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Pharmacist &amp;</text>
+  <text x="830" y="422" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Lab Technician</text>
+
+  <!-- Administrator (Top) -->
+  <rect x="395" y="60" width="160" height="55" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="475" y="93" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Administrator</text>
+
+  <!-- Payment Gateway (Bottom) -->
+  <rect x="395" y="440" width="160" height="55" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="475" y="473" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Payment Gateway</text>
+
+  <!-- Arrows & Dataflows -->
+  <!-- Patient to HMS -->
+  <path d="M 200 100 L 400 220" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="260" y="145" font-family="Arial, sans-serif" font-size="10" fill="#0f172a" transform="rotate(25, 260, 145)">Personal Info &amp; Appt Request</text>
+
+  <path d="M 390 245 L 200 135" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="250" y="195" font-family="Arial, sans-serif" font-size="10" fill="#0369a1" transform="rotate(25, 250, 195)">Appt Slip, Invoice &amp; Reports</text>
+
+  <!-- Recep to HMS -->
+  <path d="M 200 395 L 395 320" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="280" y="380" font-family="Arial, sans-serif" font-size="10" fill="#0f172a" transform="rotate(-18, 280, 380)">Registration &amp; Slot Config</text>
+
+  <path d="M 395 340 L 200 420" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="265" y="395" font-family="Arial, sans-serif" font-size="10" fill="#0369a1" transform="rotate(-18, 265, 395)">Doctor Schedules &amp; Bed Status</text>
+
+  <!-- Doctor to HMS -->
+  <path d="M 750 105 L 555 220" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="690" y="150" font-family="Arial, sans-serif" font-size="10" fill="#0f172a" transform="rotate(-25, 690, 150)">Diagnosis, Prescriptions &amp; Tests</text>
+
+  <path d="M 560 240 L 750 135" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="690" y="195" font-family="Arial, sans-serif" font-size="10" fill="#0369a1" transform="rotate(-25, 690, 195)">Patient History &amp; Appt Queue</text>
+
+  <!-- Pharmacy/Lab to HMS -->
+  <path d="M 750 395 L 555 320" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="680" y="375" font-family="Arial, sans-serif" font-size="10" fill="#0f172a" transform="rotate(18, 680, 375)">Stock Logs &amp; Lab Reports</text>
+
+  <path d="M 555 340 L 750 420" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="670" y="395" font-family="Arial, sans-serif" font-size="10" fill="#0369a1" transform="rotate(18, 670, 395)">Prescription Orders &amp; Test Req</text>
+
+  <!-- Admin to HMS -->
+  <path d="M 455 115 L 455 180" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 495 180 L 495 115" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="430" y="150" font-family="Arial, sans-serif" font-size="10" text-anchor="end" fill="#0f172a">Staff Config</text>
+  <text x="505" y="150" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#0369a1">MIS Reports</text>
+
+  <!-- HMS to PG -->
+  <path d="M 455 360 L 455 440" stroke="#1e293b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 495 440 L 495 360" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="445" y="405" font-family="Arial, sans-serif" font-size="10" text-anchor="end" fill="#0f172a">Auth Req</text>
+  <text x="505" y="405" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#0369a1">Txn Status</text>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-l0', this)">Copy PlantUML</button>
+          <pre id="code-l0">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 1.5
+}
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 2
+}
+
+title Level 0 DFD (Context Diagram) - Hospital Management System (HMS)
+
+rectangle "Patient" as Patient
+rectangle "Receptionist / Admin" as Recep
+rectangle "Doctor" as Doctor
+rectangle "Pharmacist" as Pharm
+rectangle "Laboratory Technician" as LabTech
+rectangle "Payment Gateway" as PG
+
+usecase "0\nHospital\nManagement\nSystem (HMS)" as SYS
+
+Patient -right-> SYS : Patient Details, Appointment Request, Payment
+SYS -left-> Patient : Booking Confirmation, Invoice/Receipt, Prescriptions, Lab Reports
+
+Recep -down-> SYS : Patient Registration, Doctor Shift Config
+SYS -up-> Recep : Patient Records, Daily Schedule, Bed Status
+
+Doctor -left-> SYS : Clinical Diagnosis, Electronic Prescriptions, Lab Orders
+SYS -right-> Doctor : Patient Medical History, Daily Appointment Queue
+
+Pharm -up-> SYS : Dispensing Logs, Medicine Stock Updates
+SYS -down-> Pharm : Prescription Orders, Drug Low-Stock Alerts
+
+LabTech -up-> SYS : Diagnostic Test Reports
+SYS -down-> LabTech : Lab Test Requests & Patient Specimen Data
+
+SYS -right-> PG : Transaction Request (Amount, Card/UPI Details)
+PG -left-> SYS : Payment Status (Success / Failed Token)
+
+@enduml
+</pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Level 1 DFD (Functional Decomposition: 6 Processes & 7 Stores)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="1050" height="680" viewBox="0 0 1050 680">
+  <defs>
+    <marker id="arrow1" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="525" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Level 1 DFD - Hospital Management System (HMS)</text>
+
+  <!-- Entities Left -->
+  <rect x="30" y="80" width="130" height="50" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="110" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+
+  <rect x="30" y="240" width="130" height="50" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="270" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Receptionist</text>
+
+  <!-- Entities Right -->
+  <rect x="890" y="80" width="130" height="50" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="955" y="110" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Doctor</text>
+
+  <rect x="890" y="220" width="130" height="50" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="955" y="250" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Lab Technician</text>
+
+  <rect x="890" y="360" width="130" height="50" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="955" y="390" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Pharmacist</text>
+
+  <rect x="890" y="520" width="130" height="50" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="955" y="550" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Admin</text>
+
+  <!-- Processes in Center Grid -->
+  <!-- 1.0 -->
+  <circle cx="280" cy="140" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="280" y="130" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">1.0 Patient Reg</text>
+  <text x="280" y="148" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">&amp; Appt Booking</text>
+
+  <!-- 2.0 -->
+  <circle cx="700" cy="140" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="700" y="130" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">2.0 Doctor</text>
+  <text x="700" y="148" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Consult &amp; EHR</text>
+
+  <!-- 3.0 -->
+  <circle cx="700" cy="270" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="700" y="262" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">3.0 Lab &amp;</text>
+  <text x="700" y="278" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Diagnostics</text>
+
+  <!-- 4.0 -->
+  <circle cx="700" cy="400" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="700" y="392" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">4.0 Pharmacy</text>
+  <text x="700" y="408" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">&amp; Stock</text>
+
+  <!-- 5.0 -->
+  <circle cx="280" cy="450" r="50" fill="#fef2f2" stroke="#dc2626" stroke-width="2.5"/>
+  <text x="280" y="442" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#b91c1c">5.0 Billing &amp;</text>
+  <text x="280" y="458" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#b91c1c">Payment</text>
+
+  <!-- 6.0 -->
+  <circle cx="490" cy="580" r="45" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="490" y="575" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">6.0 Hospital</text>
+  <text x="490" y="590" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Admin</text>
+
+  <!-- Data Stores (Open Rectangles) -->
+  <!-- D1 Patient Master -->
+  <path d="M 440 90 L 540 90 M 440 120 L 540 120" stroke="#334155" stroke-width="2"/>
+  <text x="490" y="108" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">D1 Patient Master</text>
+
+  <!-- D2 Appt Schedule -->
+  <path d="M 440 150 L 540 150 M 440 180 L 540 180" stroke="#334155" stroke-width="2"/>
+  <text x="490" y="168" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">D2 Appt Schedule</text>
+
+  <!-- D3 Medical Records -->
+  <path d="M 440 230 L 540 230 M 440 260 L 540 260" stroke="#334155" stroke-width="2"/>
+  <text x="490" y="248" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">D3 Medical Records</text>
+
+  <!-- D4 Lab Tests -->
+  <path d="M 440 310 L 540 310 M 440 340 L 540 340" stroke="#334155" stroke-width="2"/>
+  <text x="490" y="328" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">D4 Lab Reports</text>
+
+  <!-- D5 Pharmacy -->
+  <path d="M 440 390 L 540 390 M 440 420 L 540 420" stroke="#334155" stroke-width="2"/>
+  <text x="490" y="408" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">D5 Drug Stock</text>
+
+  <!-- D6 Billing Store -->
+  <path d="M 440 470 L 540 470 M 440 500 L 540 500" stroke="#334155" stroke-width="2"/>
+  <text x="490" y="488" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">D6 Invoices / Ledger</text>
+
+  <!-- Flows -->
+  <line x1="160" y1="110" x2="230" y2="130" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <line x1="160" y1="250" x2="235" y2="160" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <line x1="330" y1="120" x2="435" y2="105" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <line x1="330" y1="150" x2="435" y2="165" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+
+  <line x1="890" y1="110" x2="750" y2="130" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <line x1="650" y1="140" x2="545" y2="240" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+
+  <line x1="890" y1="245" x2="750" y2="265" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <line x1="650" y1="270" x2="545" y2="320" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+
+  <line x1="890" y1="385" x2="750" y2="395" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <line x1="650" y1="400" x2="545" y2="405" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+
+  <!-- Aggregation to Billing 5.0 -->
+  <line x1="440" y1="250" x2="320" y2="420" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow1)"/>
+  <line x1="440" y1="330" x2="330" y2="440" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow1)"/>
+  <line x1="440" y1="410" x2="330" y2="460" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#arrow1)"/>
+  <line x1="330" y1="475" x2="435" y2="485" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrow1)"/>
+
+  <line x1="240" y1="420" x2="140" y2="135" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <text x="170" y="300" font-family="Arial, sans-serif" font-size="10" fill="#b91c1c" transform="rotate(-70, 170, 300)">Receipt &amp; Bill</text>
+
+  <!-- Admin flows -->
+  <line x1="890" y1="545" x2="540" y2="580" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <line x1="490" y1="505" x2="490" y2="535" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow1)"/>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-l1', this)">Copy PlantUML</button>
+          <pre id="code-l1">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 1.5
+}
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 2
+}
+
+title Level 1 DFD - Hospital Management System (HMS)
+
+' ===== External Entities =====
+rectangle "Patient" as Patient
+rectangle "Receptionist / Front Desk" as Recep
+rectangle "Doctor" as Doctor
+rectangle "Pharmacist" as Pharm
+rectangle "Laboratory Technician" as LabTech
+rectangle "Hospital Administrator" as Admin
+rectangle "Payment Gateway" as PG
+
+' ===== Processes =====
+usecase "1.0\nPatient Registration\n& Appointment" as P1
+usecase "2.0\nDoctor Consultation\n& EHR Management" as P2
+usecase "3.0\nLaboratory &\nDiagnostic Tests" as P3
+usecase "4.0\nPharmacy &\nStock Inventory" as P4
+usecase "5.0\nBilling &\nPayment Processing" as P5
+usecase "6.0\nHospital Admin &\nSystem Reports" as P6
+
+' ===== Data Stores =====
+database "D1: Patient Master Store" as D1
+database "D2: Appointment Schedule" as D2
+database "D3: Medical Records & EHR" as D3
+database "D4: Lab Reports Store" as D4
+database "D5: Pharmacy Inventory" as D5
+database "D6: Invoices & Billing Store" as D6
+database "D7: Staff & Audit Log" as D7
+
+' ===== Data Flows =====
+Patient --> P1 : Personal Info, Preferred Slot
+Recep --> P1 : Verify Patient Details
+P1 --> D1 : Write Patient Record
+P1 --> D2 : Book Time Slot
+D2 --> P1 : Availability Status
+P1 --> Patient : Appointment Slip
+
+Doctor --> P2 : Examination Findings, Prescription
+D1 --> P2 : Read Patient Medical History
+P2 --> D3 : Store Diagnosis & Prescriptions
+P2 --> P3 : Lab Investigation Order
+P2 --> P4 : Prescription Order
+
+LabTech --> P3 : Upload Test Results
+P3 --> D4 : Store Diagnostic Reports
+D4 --> Patient : Download Lab Report
+
+Pharm --> P4 : Update Drug Quantities
+D5 --> P4 : Stock Availability
+P4 --> D5 : Deduct Dispensed Stock
+P4 --> Patient : Dispense Medicine
+
+P2 --> P5 : Consultation Charges
+P3 --> P5 : Diagnostic Charges
+P4 --> P5 : Medicine Bill Items
+P5 --> PG : Transaction Authorization
+PG --> P5 : Payment Confirmation
+P5 --> D6 : Save Invoice & Payment Status
+P5 --> Patient : Itemized Bill & Receipt
+
+Admin --> P6 : System Configuration & Queries
+D1 --> P6 : Patient Stats
+D6 --> P6 : Financial Ledger
+P6 --> D7 : System Audit Trail
+P6 --> Admin : MIS & Occupancy Reports
+
+@enduml
+</pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Level 2 DFD (Process 5.0 Billing & Payment Processing)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="450" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Level 2 DFD - Expansion of Process 5.0 (Billing &amp; Payment)</text>
+
+  <!-- Neighbour Stores (Left) -->
+  <path d="M 30 80 L 160 80 M 30 110 L 160 110" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="100" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1e293b">D3 Medical Records</text>
+
+  <path d="M 30 150 L 160 150 M 30 180 L 160 180" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="170" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1e293b">D4 Lab Tests Store</text>
+
+  <path d="M 30 220 L 160 220 M 30 250 L 160 250" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="240" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1e293b">D5 Drug Stock Store</text>
+
+  <!-- Subprocesses -->
+  <!-- 5.1 -->
+  <circle cx="280" cy="170" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="280" y="160" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">5.1 Aggregate</text>
+  <text x="280" y="178" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Total Costs</text>
+
+  <!-- 5.2 -->
+  <circle cx="480" cy="170" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="480" y="160" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">5.2 Insurance &amp;</text>
+  <text x="480" y="178" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Discounts</text>
+
+  <!-- 5.3 -->
+  <circle cx="680" cy="170" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="680" y="160" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">5.3 Process</text>
+  <text x="680" y="178" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Payment</text>
+
+  <!-- 5.4 -->
+  <circle cx="480" cy="380" r="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="480" y="370" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">5.4 Generate</text>
+  <text x="480" y="388" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#0369a1">Invoice &amp; Rcpt</text>
+
+  <!-- External Entities -->
+  <rect x="420" y="60" width="120" height="40" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="480" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+
+  <rect x="760" y="150" width="120" height="40" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="820" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Payment Gateway</text>
+
+  <path d="M 700 365 L 830 365 M 700 395 L 830 395" stroke="#334155" stroke-width="2"/>
+  <text x="765" y="385" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1e293b">D6 Invoices / Ledger</text>
+
+  <!-- Connections -->
+  <line x1="160" y1="95" x2="230" y2="150" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="160" y1="165" x2="230" y2="170" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="160" y1="235" x2="230" y2="190" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+  <line x1="330" y1="170" x2="430" y2="170" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="380" y="160" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">Subtotal</text>
+
+  <line x1="480" y1="100" x2="480" y2="120" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="530" y="112" font-family="Arial, sans-serif" font-size="9" fill="#0f172a">Policy No</text>
+
+  <line x1="530" y1="170" x2="630" y2="170" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="580" y="160" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">Net Bill</text>
+
+  <line x1="730" y1="170" x2="760" y2="170" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="680" y1="220" x2="525" y2="340" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="630" y="270" font-family="Arial, sans-serif" font-size="10" fill="#0369a1">Txn Success Token</text>
+
+  <line x1="530" y1="380" x2="700" y2="380" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="430" y1="380" x2="200" y2="380" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="200" y1="380" x2="440" y2="100" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <text x="210" y="250" font-family="Arial, sans-serif" font-size="10" fill="#0369a1">Final Receipt to Patient</text>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-l2', this)">Copy PlantUML</button>
+          <pre id="code-l2">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 1.5
+}
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+  BorderThickness 2
+}
+
+title Level 2 DFD - Decomposition of Process 5.0 (Billing & Payment Processing)
+
+' ===== External Entities =====
+rectangle "Patient" as Patient
+rectangle "Payment Gateway" as PG
+
+' ===== Neighbouring Data Stores =====
+database "D3: Medical Records (Consultation)" as D3
+database "D4: Lab Reports (Lab Charges)" as D4
+database "D5: Pharmacy Stock (Medicine Charges)" as D5
+database "D6: Invoices & Accounts Ledger" as D6
+
+' ===== Sub-processes =====
+usecase "5.1\nAggregate Service\nCharges" as P51
+usecase "5.2\nVerify Insurance &\nApply Discounts" as P52
+usecase "5.3\nProcess Transaction\n(Counter/Online)" as P53
+usecase "5.4\nGenerate Invoice &\nUpdate Ledger" as P54
+
+' ===== Flows =====
+D3 --> P51 : Doctor Consultation Fee
+D4 --> P51 : Diagnostic Test Costs
+D5 --> P51 : Dispensed Medicine Bill
+P51 --> P52 : Subtotal Bill Amount
+
+Patient --> P52 : Insurance Policy / Co-pay Details
+P52 --> P53 : Net Amount Payable (after discount)
+
+Patient --> P53 : Payment Mode (Cash / UPI / Card)
+P53 --> PG : Transmit Payment Token
+PG --> P53 : Transaction Status (Approved / Failed)
+
+P53 --> P54 : Payment Success Confirmation
+P54 --> D6 : Record Paid Invoice & Receipt
+P54 --> Patient : Itemized Final Bill & Payment Receipt
+
+@enduml
+</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 4 GANTT -->
+    <div id="tab-gantt" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>⏱️ Project Scheduling (Gantt Chart & PERT/CPM)</h2>
+          <p>Experiment 4: 47-Day Optimal Development Schedule & Critical Path</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 3/Experiment_3_Gantt_Chart_PERT_CPM_HMS.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 3/Experiment_3_Gantt_Chart_PERT_CPM_HMS.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Gantt Chart (CPM 47 Days)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="1000" height="580" viewBox="0 0 1000 580">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="500" y="32" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Gantt Chart - Hospital Management System (47 Days CPM Schedule)</text>
+  <text x="500" y="52" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#dc2626">Red Bars = Critical Path Activities (Zero Float) | Blue Bars = Non-Critical Activities</text>
+
+  <!-- Timeline Header -->
+  <line x1="280" y1="80" x2="960" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="280" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 0</text>
+  <text x="425" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 10</text>
+  <text x="570" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 20</text>
+  <text x="715" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 30</text>
+  <text x="860" y="75" font-family="Arial, sans-serif" font-size="11" fill="#475569">Day 40</text>
+  <text x="960" y="75" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#dc2626">Day 47</text>
+
+  <!-- Grid lines -->
+  <line x1="280" y1="80" x2="280" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="425" y1="80" x2="425" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="570" y1="80" x2="570" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="715" y1="80" x2="715" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="860" y1="80" x2="860" y2="540" stroke="#f1f5f9" stroke-width="1"/>
+  <line x1="960" y1="80" x2="960" y2="540" stroke="#fecaca" stroke-width="1.5" stroke-dasharray="4"/>
+
+  <!-- Scale: 1 day = 14.47 px -->
+  <!-- A: 0-5 (72px) -->
+  <text x="260" y="115" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">A: Requirement Analysis (5d)</text>
+  <rect x="280" y="100" width="72" height="22" rx="3" fill="#ef4444"/>
+  <text x="316" y="115" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">5d</text>
+
+  <!-- B: 5-9 (58px) -->
+  <text x="260" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">B: SRS Preparation (4d)</text>
+  <rect x="352" y="140" width="58" height="22" rx="3" fill="#ef4444"/>
+  <text x="381" y="155" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">4d</text>
+
+  <!-- C: 9-15 (87px) -->
+  <text x="260" y="195" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">C: System Design (DFD/UML) (6d)</text>
+  <rect x="410" y="180" width="87" height="22" rx="3" fill="#ef4444"/>
+  <text x="453" y="195" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">6d</text>
+
+  <!-- D: 15-20 (72px) -->
+  <text x="260" y="235" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">D: Database Design &amp; Schema (5d)</text>
+  <rect x="497" y="220" width="72" height="22" rx="3" fill="#ef4444"/>
+  <text x="533" y="235" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">5d</text>
+
+  <!-- E: 15-23 (116px) - Non-critical -->
+  <text x="260" y="275" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0369a1">E: UI/UX Wireframing (8d)</text>
+  <rect x="497" y="260" width="116" height="22" rx="3" fill="#0284c7"/>
+  <text x="555" y="275" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">8d (Slack)</text>
+
+  <!-- F: 20-29 (130px) -->
+  <text x="260" y="315" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">F: Patient Reg &amp; Appt (9d)</text>
+  <rect x="569" y="300" width="130" height="22" rx="3" fill="#ef4444"/>
+  <text x="634" y="315" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">9d</text>
+
+  <!-- G: 20-28 (116px) - Non-critical -->
+  <text x="260" y="355" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0369a1">G: Doctor Consult &amp; EHR (8d)</text>
+  <rect x="569" y="340" width="116" height="22" rx="3" fill="#0284c7"/>
+  <text x="627" y="355" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">8d</text>
+
+  <!-- H: 29-36 (101px) - Non-critical -->
+  <text x="260" y="395" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0369a1">H: Pharmacy &amp; Lab (7d)</text>
+  <rect x="699" y="380" width="101" height="22" rx="3" fill="#0284c7"/>
+  <text x="750" y="395" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">7d</text>
+
+  <!-- I: 29-38 (130px) -->
+  <text x="260" y="435" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">I: Billing &amp; Payment (9d)</text>
+  <rect x="699" y="420" width="130" height="22" rx="3" fill="#ef4444"/>
+  <text x="764" y="435" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">9d</text>
+
+  <!-- J: 38-44 (87px) -->
+  <text x="260" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">J: Testing &amp; Integration (6d)</text>
+  <rect x="829" y="460" width="87" height="22" rx="3" fill="#ef4444"/>
+  <text x="872" y="475" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">6d</text>
+
+  <!-- K: 44-47 (44px) -->
+  <text x="260" y="515" font-family="Arial, sans-serif" font-size="12" text-anchor="end" font-weight="bold" fill="#0f172a">K: Deployment &amp; Training (3d)</text>
+  <rect x="916" y="500" width="44" height="22" rx="3" fill="#ef4444"/>
+  <text x="938" y="515" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">3d</text>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-gantt', this)">Copy PlantUML</button>
+          <pre id="code-gantt">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startgantt
+title Gantt Chart - Hospital Management System (HMS) [47 Days CPM Schedule]
+printscale daily
+hide footbox
+
+<style>
+ganttDiagram {
+  FontName Arial
+  task {
+    FontName Arial
+    FontColor black
+    FontSize 11
+    LineColor black
+  }
+  milestone {
+    FontColor black
+    FontSize 11
+    BackGroundColor black
+    LineColor black
+  }
+  arrow {
+    LineColor black
+  }
+  timeline {
+    BackgroundColor white
+    LineColor black
+  }
+}
+</style>
+
+Project starts 2026-08-01
+
+[A: Requirement Analysis] as [A] lasts 5 days
+[A] is colored in Red/LightPink
+
+[B: SRS Preparation] as [B] lasts 4 days
+[B] starts at [A]'s end
+[B] is colored in Red/LightPink
+
+[C: System Design (DFD / UML)] as [C] lasts 6 days
+[C] starts at [B]'s end
+[C] is colored in Red/LightPink
+
+[D: Database Design & Schema] as [D] lasts 5 days
+[D] starts at [C]'s end
+[D] is colored in Red/LightPink
+
+[E: UI/UX Wireframing] as [E] lasts 8 days
+[E] starts at [C]'s end
+[E] is colored in LightBlue
+
+[F: Patient Reg & Appt Module] as [F] lasts 9 days
+[F] starts at [D]'s end
+[F] is colored in Red/LightPink
+
+[G: Doctor Consultation & EHR] as [G] lasts 8 days
+[G] starts at [D]'s end
+[G] is colored in LightBlue
+
+[H: Pharmacy & Lab Module] as [H] lasts 7 days
+[H] starts at [F]'s end
+[H] is colored in LightBlue
+
+[I: Billing & Payment Integration] as [I] lasts 9 days
+[I] starts at [F]'s end
+[I] is colored in Red/LightPink
+
+[J: Integration & White-Box Testing] as [J] lasts 6 days
+[J] starts at [I]'s end
+[J] is colored in Red/LightPink
+
+[K: Deployment & User Training] as [K] lasts 3 days
+[K] starts at [J]'s end
+[K] is colored in Red/LightPink
+
+[Project Baseline Complete] happens at [K]'s end
+
+@endgantt
+</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 6 USECASE & CLASS -->
+    <div id="tab-usecase" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>📐 UML Use Case & Class Diagram</h2>
+          <p>Experiment 6: Behavioral Actors & Static Object Architecture</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 5/Experiment_5_UseCase_Class_Diagram.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 5/Experiment_5_UseCase_Class_Diagram.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Use Case Diagram (<<include>> and <<extend>>)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="980" height="650" viewBox="0 0 980 650">
+  <defs>
+    <marker id="uc_arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="490" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Use Case Diagram - Hospital Management System (HMS)</text>
+
+  <!-- System Boundary Box -->
+  <rect x="230" y="60" width="520" height="570" rx="8" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+  <text x="490" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0369a1">HOSPITAL MANAGEMENT SYSTEM (HMS)</text>
+
+  <!-- Actors (Stickmen) Left -->
+  <!-- Patient -->
+  <circle cx="90" cy="120" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="134" x2="90" y2="170" stroke="#1e293b" stroke-width="2"/>
+  <line x1="65" y1="148" x2="115" y2="148" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="170" x2="70" y2="205" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="170" x2="110" y2="205" stroke="#1e293b" stroke-width="2"/>
+  <text x="90" y="225" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+
+  <!-- Receptionist -->
+  <circle cx="90" cy="300" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="314" x2="90" y2="350" stroke="#1e293b" stroke-width="2"/>
+  <line x1="65" y1="328" x2="115" y2="328" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="350" x2="70" y2="385" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="350" x2="110" y2="385" stroke="#1e293b" stroke-width="2"/>
+  <text x="90" y="405" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Receptionist</text>
+
+  <!-- Administrator -->
+  <circle cx="90" cy="480" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="494" x2="90" y2="530" stroke="#1e293b" stroke-width="2"/>
+  <line x1="65" y1="508" x2="115" y2="508" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="530" x2="70" y2="565" stroke="#1e293b" stroke-width="2"/>
+  <line x1="90" y1="530" x2="110" y2="565" stroke="#1e293b" stroke-width="2"/>
+  <text x="90" y="585" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Administrator</text>
+
+  <!-- Actors Right -->
+  <!-- Doctor -->
+  <circle cx="890" cy="120" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="134" x2="890" y2="170" stroke="#1e293b" stroke-width="2"/>
+  <line x1="865" y1="148" x2="915" y2="148" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="170" x2="870" y2="205" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="170" x2="910" y2="205" stroke="#1e293b" stroke-width="2"/>
+  <text x="890" y="225" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">Doctor</text>
+
+  <!-- Pharmacist / Lab Tech -->
+  <circle cx="890" cy="300" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="314" x2="890" y2="350" stroke="#1e293b" stroke-width="2"/>
+  <line x1="865" y1="328" x2="915" y2="328" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="350" x2="870" y2="385" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="350" x2="910" y2="385" stroke="#1e293b" stroke-width="2"/>
+  <text x="890" y="405" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Pharm / Lab Tech</text>
+
+  <!-- Payment Gateway -->
+  <circle cx="890" cy="480" r="14" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="494" x2="890" y2="530" stroke="#1e293b" stroke-width="2"/>
+  <line x1="865" y1="508" x2="915" y2="508" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="530" x2="870" y2="565" stroke="#1e293b" stroke-width="2"/>
+  <line x1="890" y1="530" x2="910" y2="565" stroke="#1e293b" stroke-width="2"/>
+  <text x="890" y="585" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Payment Gateway</text>
+
+  <!-- Use Cases (Ovals) -->
+  <!-- UC1 Register Patient -->
+  <ellipse cx="340" cy="120" rx="80" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="340" y="124" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Register Patient</text>
+
+  <!-- UC2 Book Appt -->
+  <ellipse cx="340" cy="190" rx="85" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="340" y="194" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Book Appointment</text>
+
+  <!-- UC2_Inc Verify Doctor Availability -->
+  <ellipse cx="580" cy="160" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="580" y="164" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Verify Doctor Availability</text>
+
+  <!-- UC3 Record Vitals & Clinical Notes -->
+  <ellipse cx="610" cy="230" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="610" y="234" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Record EHR &amp; Diagnosis</text>
+
+  <!-- UC4 Prescribe Meds & Order Tests -->
+  <ellipse cx="610" cy="300" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="610" y="304" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Prescribe Meds &amp; Lab Tests</text>
+
+  <!-- UC5 Dispense Drugs & Lab Report -->
+  <ellipse cx="610" cy="370" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="610" y="374" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Dispense Drugs &amp; Lab Tests</text>
+
+  <!-- UC6 Calculate Bill -->
+  <ellipse cx="350" cy="430" rx="80" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="350" y="434" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Calculate Total Bill</text>
+
+  <!-- UC7 Process Payment -->
+  <ellipse cx="580" cy="480" rx="85" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="580" y="484" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Process Payment</text>
+
+  <!-- UC8 Manage Staff & Reports (Admin) -->
+  <ellipse cx="360" cy="550" rx="95" ry="22" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="360" y="554" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Manage Staff &amp; MIS Reports</text>
+
+  <!-- Links -->
+  <line x1="120" y1="160" x2="255" y2="190" stroke="#334155" stroke-width="1.5"/>
+  <line x1="120" y1="330" x2="260" y2="130" stroke="#334155" stroke-width="1.5"/>
+  <line x1="120" y1="340" x2="255" y2="190" stroke="#334155" stroke-width="1.5"/>
+  <line x1="120" y1="360" x2="270" y2="430" stroke="#334155" stroke-width="1.5"/>
+  <line x1="120" y1="520" x2="265" y2="550" stroke="#334155" stroke-width="1.5"/>
+
+  <line x1="860" y1="160" x2="705" y2="230" stroke="#334155" stroke-width="1.5"/>
+  <line x1="860" y1="170" x2="705" y2="300" stroke="#334155" stroke-width="1.5"/>
+  <line x1="860" y1="340" x2="705" y2="370" stroke="#334155" stroke-width="1.5"/>
+  <line x1="860" y1="500" x2="665" y2="480" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Include relationship -->
+  <line x1="420" y1="180" x2="490" y2="170" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#uc_arrow)"/>
+  <text x="460" y="168" font-family="Arial, sans-serif" font-size="9" font-style="italic" fill="#0284c7">&lt;&lt;include&gt;&gt;</text>
+
+  <line x1="425" y1="445" x2="500" y2="470" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#uc_arrow)"/>
+  <text x="475" y="450" font-family="Arial, sans-serif" font-size="9" font-style="italic" fill="#0284c7">&lt;&lt;include&gt;&gt;</text>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-uc', this)">Copy PlantUML</button>
+          <pre id="code-uc">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+title Use Case Diagram - Hospital Management System (HMS)
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam actorStyle stickman
+
+skinparam usecase {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+}
+
+actor "Patient" as Patient
+actor "Receptionist" as Recep
+actor "Doctor" as Doctor
+actor "Pharmacist" as Pharm
+actor "Lab Technician" as LabTech
+actor "Administrator" as Admin
+actor "Payment Gateway" as PG
+
+rectangle "HOSPITAL MANAGEMENT SYSTEM (HMS)" {
+
+    usecase "Login & Authenticate" as UC_Auth
+    usecase "Register Patient Profile" as UC1
+    usecase "Schedule Appointment" as UC2
+    usecase "Verify Doctor Availability" as UC2_Inc
+    usecase "Cancel / Reschedule Appointment" as UC2_Ext
+    usecase "Record Clinical Notes & Diagnosis" as UC3
+    usecase "Issue Electronic Prescription" as UC4
+    usecase "Order Diagnostic Lab Test" as UC5
+    usecase "Dispense Prescribed Medication" as UC6
+    usecase "Update Pharmacy Drug Stock" as UC7
+    usecase "Conduct Test & Upload Lab Report" as UC8
+    usecase "Calculate Total Bill" as UC9
+    usecase "Apply Health Insurance Discount" as UC9_Ext
+    usecase "Process Payment Transaction" as UC10
+    usecase "Manage Staff & Role Access" as UC11
+    usecase "Generate Hospital MIS Reports" as UC12
+
+    ' Relationships
+    UC2 .> UC2_Inc : <<include>>
+    UC2_Ext .> UC2 : <<extend>>
+
+    UC9 .> UC10 : <<include>>
+    UC9_Ext .> UC9 : <<extend>>
+
+    UC1 .> UC_Auth : <<include>>
+    UC3 .> UC_Auth : <<include>>
+    UC11 .> UC_Auth : <<include>>
+}
+
+' Actor to Use Case Associations
+Patient --> UC2
+Patient --> UC10
+
+Recep --> UC1
+Recep --> UC2
+Recep --> UC9
+
+Doctor --> UC3
+Doctor --> UC4
+Doctor --> UC5
+
+Pharm --> UC6
+Pharm --> UC7
+
+LabTech --> UC8
+
+Admin --> UC11
+Admin --> UC12
+
+UC10 --> PG
+
+@enduml
+</pre>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Class Diagram (Inheritance, Aggregation & Composition)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="1050" height="720" viewBox="0 0 1050 720">
+  <defs>
+    <marker id="inherit" viewBox="0 0 12 12" refX="1" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,1 11,6 1,11" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+    </marker>
+    <marker id="aggr" viewBox="0 0 16 12" refX="1" refY="6" markerWidth="11" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,6 8,1 15,6 8,11" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+    </marker>
+    <marker id="comp" viewBox="0 0 16 12" refX="1" refY="6" markerWidth="11" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,6 8,1 15,6 8,11" fill="#1e293b" stroke="#1e293b" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="525" y="28" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0f172a">Class Diagram - Hospital Management System (HMS)</text>
+
+  <!-- User Abstract Class (Top Center) -->
+  <rect x="420" y="50" width="210" height="110" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="420" y="50" width="210" height="26" fill="#e2e8f0"/>
+  <text x="525" y="68" font-family="Arial, sans-serif" font-size="12" font-style="italic" font-weight="bold" text-anchor="middle" fill="#0f172a">&lt;&lt;abstract&gt;&gt; User</text>
+  <text x="430" y="92" font-family="Courier, monospace" font-size="10" fill="#334155"># userId : String</text>
+  <text x="430" y="106" font-family="Courier, monospace" font-size="10" fill="#334155"># name, email, phone : String</text>
+  <line x1="420" y1="114" x2="630" y2="114" stroke="#cbd5e1"/>
+  <text x="430" y="130" font-family="Courier, monospace" font-size="10" fill="#334155">+ login() : boolean</text>
+  <text x="430" y="146" font-family="Courier, monospace" font-size="10" fill="#334155">+ logout() : void</text>
+
+  <!-- Patient Class (Left) -->
+  <rect x="50" y="220" width="220" height="130" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="50" y="220" width="220" height="26" fill="#e2e8f0"/>
+  <text x="160" y="238" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">Patient</text>
+  <text x="60" y="260" font-family="Courier, monospace" font-size="10" fill="#334155">- patientId : String</text>
+  <text x="60" y="274" font-family="Courier, monospace" font-size="10" fill="#334155">- bloodGroup, dob : String</text>
+  <line x1="50" y1="284" x2="270" y2="284" stroke="#cbd5e1"/>
+  <text x="60" y="302" font-family="Courier, monospace" font-size="10" fill="#334155">+ register() : void</text>
+  <text x="60" y="318" font-family="Courier, monospace" font-size="10" fill="#334155">+ bookAppointment() : Appt</text>
+  <text x="60" y="334" font-family="Courier, monospace" font-size="10" fill="#334155">+ payBill(mode) : boolean</text>
+
+  <!-- Staff Abstract Class (Right) -->
+  <rect x="500" y="220" width="210" height="95" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="500" y="220" width="210" height="26" fill="#e2e8f0"/>
+  <text x="605" y="238" font-family="Arial, sans-serif" font-size="12" font-style="italic" font-weight="bold" text-anchor="middle" fill="#0f172a">&lt;&lt;abstract&gt;&gt; Staff</text>
+  <text x="510" y="260" font-family="Courier, monospace" font-size="10" fill="#334155"># employeeId : String</text>
+  <text x="510" y="274" font-family="Courier, monospace" font-size="10" fill="#334155"># salary : double</text>
+  <line x1="500" y1="284" x2="710" y2="284" stroke="#cbd5e1"/>
+  <text x="510" y="302" font-family="Courier, monospace" font-size="10" fill="#334155">+ markAttendance() : void</text>
+
+  <!-- Doctor Class -->
+  <rect x="360" y="370" width="220" height="120" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="360" y="370" width="220" height="26" fill="#e2e8f0"/>
+  <text x="470" y="388" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">Doctor</text>
+  <text x="370" y="410" font-family="Courier, monospace" font-size="10" fill="#334155">- doctorId : String</text>
+  <text x="370" y="424" font-family="Courier, monospace" font-size="10" fill="#334155">- specialization : String</text>
+  <line x1="360" y1="434" x2="580" y2="434" stroke="#cbd5e1"/>
+  <text x="370" y="450" font-family="Courier, monospace" font-size="10" fill="#334155">+ examinePatient() : MedRecord</text>
+  <text x="370" y="466" font-family="Courier, monospace" font-size="10" fill="#334155">+ writePrescription() : Presc</text>
+
+  <!-- Department Class -->
+  <rect x="790" y="370" width="210" height="95" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="790" y="370" width="210" height="26" fill="#e2e8f0"/>
+  <text x="895" y="388" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">Department</text>
+  <text x="800" y="410" font-family="Courier, monospace" font-size="10" fill="#334155">- deptId, name : String</text>
+  <line x1="790" y1="420" x2="1000" y2="420" stroke="#cbd5e1"/>
+  <text x="800" y="440" font-family="Courier, monospace" font-size="10" fill="#334155">+ addDoctor(d) : void</text>
+  <text x="800" y="454" font-family="Courier, monospace" font-size="10" fill="#334155">+ getAvailableDoctors() : List</text>
+
+  <!-- Appointment Class -->
+  <rect x="50" y="420" width="220" height="110" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="50" y="420" width="220" height="26" fill="#e2e8f0"/>
+  <text x="160" y="438" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">Appointment</text>
+  <text x="60" y="460" font-family="Courier, monospace" font-size="10" fill="#334155">- appointmentId : String</text>
+  <text x="60" y="474" font-family="Courier, monospace" font-size="10" fill="#334155">- timeSlot, status : String</text>
+  <line x1="50" y1="484" x2="270" y2="484" stroke="#cbd5e1"/>
+  <text x="60" y="502" font-family="Courier, monospace" font-size="10" fill="#334155">+ confirm() / reschedule()</text>
+
+  <!-- Bill Class (Bottom Center) -->
+  <rect x="360" y="550" width="240" height="140" rx="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <rect x="360" y="550" width="240" height="26" fill="#fee2e2"/>
+  <text x="480" y="568" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#b91c1c">Bill (SE Exp 12 Tested)</text>
+  <text x="370" y="590" font-family="Courier, monospace" font-size="10" fill="#334155">- billId : String</text>
+  <text x="370" y="604" font-family="Courier, monospace" font-size="10" fill="#334155">- fee, labCost, netAmount : double</text>
+  <line x1="360" y1="614" x2="600" y2="614" stroke="#fca5a5"/>
+  <text x="370" y="632" font-family="Courier, monospace" font-size="10" font-weight="bold" fill="#b91c1c">+ calculateBill(...) : double</text>
+  <text x="370" y="648" font-family="Courier, monospace" font-size="10" fill="#334155">+ processPayment() : boolean</text>
+  <text x="370" y="664" font-family="Courier, monospace" font-size="10" fill="#334155">+ generateReceipt() : Invoice</text>
+
+  <!-- MedicalRecord & Prescription (Bottom Right) -->
+  <rect x="730" y="530" width="260" height="130" rx="3" fill="#f8fafc" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="730" y="530" width="260" height="26" fill="#e2e8f0"/>
+  <text x="860" y="548" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0f172a">MedicalRecord &amp; Prescription</text>
+  <text x="740" y="570" font-family="Courier, monospace" font-size="10" fill="#334155">- recordId, diagnosis : String</text>
+  <text x="740" y="584" font-family="Courier, monospace" font-size="10" fill="#334155">- prescriptionItems : List</text>
+  <line x1="730" y1="594" x2="990" y2="594" stroke="#cbd5e1"/>
+  <text x="740" y="612" font-family="Courier, monospace" font-size="10" fill="#334155">+ addPrescriptionItem() : void</text>
+  <text x="740" y="628" font-family="Courier, monospace" font-size="10" fill="#334155">+ attachLabReport() : void</text>
+
+  <!-- Relationships -->
+  <!-- Patient extends User -->
+  <line x1="160" y1="220" x2="440" y2="160" stroke="#1e293b" stroke-width="1.5" marker-end="url(#inherit)"/>
+  <!-- Staff extends User -->
+  <line x1="605" y1="220" x2="525" y2="160" stroke="#1e293b" stroke-width="1.5" marker-end="url(#inherit)"/>
+  <!-- Doctor extends Staff -->
+  <line x1="470" y1="370" x2="580" y2="315" stroke="#1e293b" stroke-width="1.5" marker-end="url(#inherit)"/>
+
+  <!-- Aggregation: Dept o- Doctor -->
+  <line x1="790" y1="415" x2="580" y2="415" stroke="#1e293b" stroke-width="1.5" marker-start="url(#aggr)"/>
+  <text x="760" y="408" font-family="Arial, sans-serif" font-size="10" fill="#475569">1</text>
+  <text x="600" y="408" font-family="Arial, sans-serif" font-size="10" fill="#475569">1..*</text>
+
+  <!-- Patient books Appointment -->
+  <line x1="160" y1="350" x2="160" y2="420" stroke="#1e293b" stroke-width="1.5"/>
+  <!-- Doctor attends Appointment -->
+  <line x1="360" y1="450" x2="270" y2="470" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Appointment to Bill -->
+  <line x1="270" y1="500" x2="360" y2="570" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Doctor creates MedicalRecord (Composition) -->
+  <line x1="580" y1="470" x2="730" y2="560" stroke="#1e293b" stroke-width="1.5" marker-start="url(#comp)"/>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-cl', this)">Copy PlantUML</button>
+          <pre id="code-cl">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+title Class Diagram - Hospital Management System (HMS)
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+
+' =========================
+' CLASSES
+' =========================
+
+abstract class User {
+    # userId : String
+    # name : String
+    # email : String
+    # phone : String
+    # passwordHash : String
+    --
+    + login() : boolean
+    + logout() : void
+    + updateProfile() : void
+}
+
+class Patient {
+    - patientId : String
+    - dob : Date
+    - gender : String
+    - bloodGroup : String
+    - emergencyContact : String
+    --
+    + register() : void
+    + bookAppointment() : Appointment
+    + viewMedicalHistory() : List
+    + payBill() : boolean
+}
+
+abstract class Staff {
+    # employeeId : String
+    # dateOfJoining : Date
+    # salary : double
+    --
+    + markAttendance() : void
+}
+
+class Doctor {
+    - doctorId : String
+    - specialization : String
+    - licenseNumber : String
+    - consultationFee : double
+    --
+    + examinePatient(patientId) : MedicalRecord
+    + writePrescription(recordId) : Prescription
+    + orderLabTest(patientId) : LabTest
+}
+
+class Receptionist {
+    - receptionistId : String
+    --
+    + registerPatient(patient) : void
+    + scheduleAppointment() : Appointment
+    + allocateBed(patientId) : void
+}
+
+class Pharmacist {
+    - pharmacistId : String
+    - licenseNo : String
+    --
+    + dispenseMedicine(prescriptionId) : void
+    + checkStock(medicineId) : int
+    + restockMedicine(medicineId, qty) : void
+}
+
+class LabTechnician {
+    - technicianId : String
+    - certification : String
+    --
+    + collectSample(testId) : void
+    + uploadTestResult(testId, data) : void
+}
+
+class Administrator {
+    - adminId : String
+    --
+    + manageUsers() : void
+    + viewAuditLogs() : List
+    + generateMISReports() : void
+}
+
+class Department {
+    - deptId : String
+    - deptName : String
+    - location : String
+    --
+    + addDoctor(doctor) : void
+    + getAvailableDoctors() : List
+}
+
+class Appointment {
+    - appointmentId : String
+    - appointmentDate : Date
+    - timeSlot : String
+    - status : String
+    --
+    + confirmAppointment() : void
+    + cancelAppointment() : void
+    + reschedule(newDate) : void
+}
+
+class MedicalRecord {
+    - recordId : String
+    - diagnosis : String
+    - symptoms : String
+    - recordDate : Date
+    --
+    + addPrescription(p) : void
+    + attachLabReport(r) : void
+}
+
+class Prescription {
+    - prescriptionId : String
+    - issueDate : Date
+    - instructions : String
+    --
+    + addMedicine(item) : void
+}
+
+class PrescriptionItem {
+    - medicineId : String
+    - medicineName : String
+    - dosage : String
+    - durationDays : int
+}
+
+class Medicine {
+    - medicineId : String
+    - name : String
+    - unitPrice : double
+    - stockQuantity : int
+    - expiryDate : Date
+    --
+    + reduceStock(qty) : boolean
+    + restock(qty) : void
+}
+
+class LabTest {
+    - testId : String
+    - testName : String
+    - cost : double
+    - status : String
+    - resultData : String
+    --
+    + processTest() : void
+    + generateReport() : String
+}
+
+class Bill {
+    - billId : String
+    - billingDate : Date
+    - consultationFee : double
+    - labCharges : double
+    - pharmacyCharges : double
+    - netAmount : double
+    - paymentStatus : String
+    --
+    + calculateBill(fee, labCost, hasIns, isEmerg) : double
+    + processPayment(mode) : boolean
+    + generateReceipt() : void
+}
+
+' =========================
+' RELATIONSHIPS
+' =========================
+
+User <|-- Patient
+User <|-- Staff
+Staff <|-- Doctor
+Staff <|-- Receptionist
+Staff <|-- Pharmacist
+Staff <|-- LabTechnician
+Staff <|-- Administrator
+
+Department "1" o-- "1..*" Doctor : contains >
+
+Patient "1" --> "0..*" Appointment : books >
+Doctor "1" --> "0..*" Appointment : attends >
+Appointment "1" --> "1" Bill : generates >
+
+Patient "1" --> "0..*" MedicalRecord : has >
+Doctor "1" --> "0..*" MedicalRecord : creates >
+
+MedicalRecord "1" *-- "1" Prescription : contains >
+Prescription "1" *-- "1..*" PrescriptionItem : includes >
+PrescriptionItem ..> Medicine : references >
+
+Doctor "1" --> "0..*" LabTest : requests >
+LabTechnician "1" --> "0..*" LabTest : conducts >
+
+Bill "1" --> "1" Patient : billed to >
+
+@enduml
+</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 7 ACTIVITY -->
+    <div id="tab-activity" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>⚡ UML Activity Diagram (Workflow Modeling)</h2>
+          <p>Experiment 7: Multi-Actor Swimlanes & Concurrent Fork/Join Execution</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 6/Experiment_6_Activity_Diagram.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 6/Experiment_6_Activity_Diagram.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Activity Diagram (5 Swimlanes: Patient, Recep, Doctor, Diagnostics, Billing)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="980" height="720" viewBox="0 0 980 720">
+  <defs>
+    <marker id="act_arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="490" y="26" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="#0f172a">Activity Diagram - Hospital Management System (Patient Flow &amp; Billing)</text>
+
+  <!-- Swimlane Partitions -->
+  <!-- Lane 1: Patient (0 - 240) -->
+  <line x1="240" y1="45" x2="240" y2="700" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+  <text x="120" y="60" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0369a1">Patient</text>
+
+  <!-- Lane 2: Receptionist (240 - 480) -->
+  <line x1="480" y1="45" x2="480" y2="700" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+  <text x="360" y="60" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0369a1">Receptionist</text>
+
+  <!-- Lane 3: Doctor (480 - 720) -->
+  <line x1="720" y1="45" x2="720" y2="700" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+  <text x="600" y="60" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0369a1">Doctor</text>
+
+  <!-- Lane 4: Pharmacy / Lab &amp; Billing (720 - 980) -->
+  <text x="850" y="60" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0369a1">Diagnostics, Pharmacy &amp; Billing</text>
+
+  <!-- Start Node -->
+  <circle cx="120" cy="85" r="10" fill="#1e293b"/>
+  <line x1="120" y1="95" x2="120" y2="120" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+
+  <!-- Action: Patient fills reg -->
+  <rect x="40" y="120" width="160" height="38" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="1.5"/>
+  <text x="120" y="144" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Fill Registration Details</text>
+
+  <line x1="200" y1="139" x2="280" y2="139" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+
+  <!-- Action: Recep verify & check slot -->
+  <rect x="280" y="120" width="160" height="38" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="1.5"/>
+  <text x="360" y="144" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Verify &amp; Check Doctor Slot</text>
+
+  <!-- Decision: Slot available -->
+  <polygon points="360,180 400,205 360,230 320,205" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="360" y="209" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="#0f172a">Available?</text>
+  <line x1="360" y1="158" x2="360" y2="180" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+
+  <!-- If yes -> Issue token -->
+  <line x1="360" y1="230" x2="360" y2="260" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+  <text x="375" y="248" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">[Yes]</text>
+
+  <rect x="280" y="260" width="160" height="38" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="1.5"/>
+  <text x="360" y="284" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Issue Appointment Token</text>
+
+  <!-- To Doctor Consult -->
+  <line x1="440" y1="279" x2="520" y2="279" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+
+  <!-- Doctor Examine & Diagnosis -->
+  <rect x="520" y="260" width="160" height="38" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="1.5"/>
+  <text x="600" y="284" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Examine &amp; Record Diagnosis</text>
+
+  <!-- Fork Bar -->
+  <line x1="520" y1="340" x2="680" y2="340" stroke="#0f172a" stroke-width="5"/>
+  <line x1="600" y1="298" x2="600" y2="338" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+
+  <!-- Parallel Branch 1: Lab Test -->
+  <line x1="550" y1="342" x2="550" y2="375" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="550" y1="375" x2="760" y2="375" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+  <rect x="760" y="355" width="180" height="38" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="1.5"/>
+  <text x="850" y="378" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Conduct Diagnostic Lab Test</text>
+
+  <!-- Parallel Branch 2: Dispense Medicine -->
+  <line x1="650" y1="342" x2="650" y2="425" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="650" y1="425" x2="760" y2="425" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+  <rect x="760" y="405" width="180" height="38" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="1.5"/>
+  <text x="850" y="428" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#0f172a">Verify &amp; Dispense Drugs</text>
+
+  <!-- Join Bar -->
+  <line x1="780" y1="475" x2="920" y2="475" stroke="#0f172a" stroke-width="5"/>
+  <line x1="850" y1="393" x2="850" y2="473" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="850" y1="443" x2="850" y2="473" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Billing Execution -->
+  <line x1="850" y1="477" x2="850" y2="505" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+  <rect x="760" y="505" width="180" height="42" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="850" y="524" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#b91c1c">Aggregate Charges &amp;</text>
+  <text x="850" y="538" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#b91c1c">calculateBill(fee, lab, ins...)</text>
+
+  <!-- Discount Decision -->
+  <polygon points="850,575 885,595 850,615 815,595" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="850" y="598" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#0f172a">Discount?</text>
+  <line x1="850" y1="547" x2="850" y2="575" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+
+  <!-- Patient pays -->
+  <line x1="815" y1="595" x2="160" y2="595" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+  <rect x="40" y="575" width="160" height="40" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="1.5"/>
+  <text x="120" y="594" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">Authorize Payment</text>
+  <text x="120" y="608" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="#64748b">(Cash / Card / UPI)</text>
+
+  <!-- Payment success & receipt -->
+  <line x1="120" y1="615" x2="120" y2="650" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+  <rect x="40" y="650" width="160" height="38" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="120" y="674" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#15803d">Receipt Issued &amp; Done</text>
+
+  <!-- Final Node -->
+  <circle cx="240" cy="669" r="12" fill="none" stroke="#15803d" stroke-width="2"/>
+  <circle cx="240" cy="669" r="7" fill="#15803d"/>
+  <line x1="200" y1="669" x2="228" y2="669" stroke="#1e293b" stroke-width="1.5" marker-end="url(#act_arrow)"/>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-act', this)">Copy PlantUML</button>
+          <pre id="code-act">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+title Activity Diagram - Hospital Management System (Patient Flow & Billing)
+
+|Patient|
+start
+:Fill Registration Details;
+
+|Receptionist|
+:Verify Identity & Register;
+:Check Doctor Availability;
+
+if (Slot Available?) then (Yes)
+  :Issue Appointment Token;
+else (No)
+  :Propose Alternate Slot;
+  if (Patient Accepts?) then (Yes)
+    :Issue Appointment Token;
+  else (No)
+    :Cancel Booking;
+    stop
+  endif
+endif
+
+|Doctor|
+:Examine Patient & Vitals;
+:Enter Diagnosis in EHR;
+
+fork
+  :Order Diagnostic Lab Tests;
+  |Diagnostic Lab|
+  :Collect Specimen Sample;
+  :Analyze & Upload Lab Report;
+fork again
+  :Write Electronic Prescription;
+  |Pharmacy|
+  :Verify Medicine Stock;
+  :Dispense Prescribed Drugs;
+end fork
+
+|Billing System|
+:Aggregate Consultation, Lab & Drug Costs;
+:Execute calculateBill();
+
+if (Has Insurance OR (Emergency AND Bill > 5000)?) then (Yes)
+  :Apply Discount / Co-pay Waiver;
+else (No)
+  :Retain Standard Gross Amount;
+endif
+
+|Patient|
+:Choose Payment Mode (Card / UPI / Cash);
+:Authorize Payment Transaction;
+
+|Billing System|
+if (Payment Successful?) then (Yes)
+  :Update Ledger to PAID;
+  :Generate Itemized Invoice & Receipt;
+  |Patient|
+  :Collect Receipt & Discharged;
+  stop
+else (No)
+  :Flag Transaction Failed;
+  |Patient|
+  :Retry Payment with Alternate Mode;
+  detach
+endif
+
+@enduml
+</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 8 SEQUENCE & COLLAB -->
+    <div id="tab-seq" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>🔄 UML Sequence & Collaboration Diagram</h2>
+          <p>Experiment 8: Dynamic Time-Ordered & Object-Link Interaction Models</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 7/Experiment_7_Sequence_Collaboration_Hospital_Management_System.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 7/Experiment_7_Sequence_Collaboration_Hospital_Management_System.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Sequence Diagram (Patient Consultation & Billing Lifecycle)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="980" height="620" viewBox="0 0 980 620">
+  <defs>
+    <marker id="seq_arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="490" y="28" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="#0f172a">Sequence Diagram - Patient Consultation &amp; Billing Lifecycle</text>
+
+  <!-- Lifeline Headers -->
+  <rect x="40" y="55" width="100" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="90" y="77" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+  <line x1="90" y1="90" x2="90" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="180" y="55" width="120" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="240" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:PatientPortal</text>
+  <line x1="240" y1="90" x2="240" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="340" y="55" width="130" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="405" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:ApptController</text>
+  <line x1="405" y1="90" x2="405" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="510" y="55" width="120" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="570" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:ScheduleDB</text>
+  <line x1="570" y1="90" x2="570" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="670" y="55" width="130" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="735" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:BillingService</text>
+  <line x1="735" y1="90" x2="735" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="830" y="55" width="120" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="890" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:PaymentGateway</text>
+  <line x1="890" y1="90" x2="890" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <!-- Messages -->
+  <!-- 1. Book Appt -->
+  <line x1="90" y1="125" x2="235" y2="125" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="118" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">1: bookAppointment(docId, slot)</text>
+
+  <!-- 2. Validate Slot -->
+  <line x1="240" y1="155" x2="400" y2="155" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="320" y="148" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">2: validateSlot(docId, slot)</text>
+
+  <!-- 3. Query DB -->
+  <line x1="405" y1="185" x2="565" y2="185" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="485" y="178" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">3: queryAvailability()</text>
+
+  <!-- 4. Return status -->
+  <line x1="565" y1="215" x2="405" y2="215" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="485" y="208" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0369a1">4: slotAvailable: true</text>
+
+  <!-- 5. Issue Token -->
+  <line x1="405" y1="245" x2="240" y2="245" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="320" y="238" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0369a1">5: tokenIssued(T101)</text>
+
+  <line x1="240" y1="270" x2="90" y2="270" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="263" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0369a1">6: displayToken(T101)</text>
+
+  <!-- Consultation Divider -->
+  <rect x="50" y="295" width="880" height="24" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="490" y="311" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#64748b">--- Patient Consults Doctor &amp; Undergoes Treatment ---</text>
+
+  <!-- 7. Request Checkout -->
+  <line x1="90" y1="350" x2="235" y2="350" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="343" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">7: requestCheckoutBill()</text>
+
+  <!-- 8. Calculate Bill -->
+  <line x1="240" y1="380" x2="730" y2="380" stroke="#dc2626" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="480" y="373" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#b91c1c">8: calculateBill(fee, labCost, hasIns, isEmerg)</text>
+
+  <!-- 9. Return Bill Amount -->
+  <line x1="730" y1="410" x2="240" y2="410" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="480" y="403" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0369a1">9: return totalAmountPayable</text>
+
+  <!-- 10. Pay Online -->
+  <line x1="90" y1="440" x2="235" y2="440" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="433" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">10: authorizePayment(amount, UPI)</text>
+
+  <line x1="240" y1="470" x2="885" y2="470" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="560" y="463" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">11: chargeGateway(token, amount)</text>
+
+  <line x1="885" y1="500" x2="240" y2="500" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="560" y="493" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#15803d">12: paymentStatus: SUCCESS (authTxnId)</text>
+
+  <!-- 13. Receipt -->
+  <line x1="240" y1="535" x2="90" y2="535" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="528" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#15803d">13: deliverDigitalReceipt(PDF)</text>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-seq', this)">Copy PlantUML</button>
+          <pre id="code-seq">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign center
+
+title Sequence Diagram - Patient Consultation & Billing Lifecycle
+
+actor Patient as P
+participant ":PatientPortal" as UI
+participant ":AppointmentController" as AC
+participant ":DoctorScheduleDB" as DB
+participant ":ConsultationService" as CS
+participant ":BillingService" as BS
+participant ":PaymentGateway" as PG
+
+P -> UI : bookAppointment(doctorId, slot)
+activate UI
+UI -> AC : validateSlot(doctorId, slot)
+activate AC
+AC -> DB : queryAvailability(doctorId, slot)
+activate DB
+DB --> AC : slotAvailable: true
+deactivate DB
+
+AC -> DB : reserveSlot(appointmentId)
+activate DB
+DB --> AC : confirmed
+deactivate DB
+
+AC --> UI : appointmentConfirmed(tokenNo)
+deactivate AC
+UI --> P : displayConfirmation(tokenNo)
+deactivate UI
+
+== Consultation & Treatment Phase ==
+
+P -> CS : attendConsultation(tokenNo)
+activate CS
+CS -> CS : recordDiagnosis()
+CS -> BS : submitCharges(fee, labCost, meds)
+activate BS
+BS --> CS : chargesAcknowledged
+deactivate BS
+CS --> P : consultationComplete
+deactivate CS
+
+== Billing & Checkout Phase ==
+
+P -> UI : requestBillCheckout()
+activate UI
+UI -> BS : calculateBill(fee, labCost, hasIns, isEmerg)
+activate BS
+BS -> BS : applyDiscountRules()
+BS --> UI : totalPayableAmount
+deactivate BS
+
+UI -> P : promptPaymentOptions()
+P -> UI : submitPayment(mode, token)
+UI -> PG : processTransaction(amount, token)
+activate PG
+PG --> UI : paymentStatus: SUCCESS (authTxnId)
+deactivate PG
+
+UI -> BS : markBillPaid(billId, authTxnId)
+activate BS
+BS --> UI : invoiceGenerated(pdfReceipt)
+deactivate BS
+
+UI --> P : downloadReceipt()
+deactivate UI
+
+@enduml
+</pre>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Collaboration Diagram (Appointment Scheduling & Billing)</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+  <defs>
+    <marker id="col_arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="450" y="30" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="#0f172a">Collaboration Diagram - Appointment Scheduling &amp; Billing</text>
+
+  <!-- Object 1: Patient (Actor) -->
+  <rect x="50" y="100" width="130" height="55" rx="4" fill="#f1f5f9" stroke="#334155" stroke-width="1.5"/>
+  <text x="115" y="132" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">1: Patient</text>
+
+  <!-- Object 2: PatientPortal (Boundary) -->
+  <rect x="360" y="100" width="180" height="55" rx="4" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="450" y="122" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">&lt;&lt;boundary&gt;&gt;</text>
+  <text x="450" y="140" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">2: PatientPortal</text>
+
+  <!-- Object 3: ApptController (Control) -->
+  <rect x="680" y="100" width="180" height="55" rx="4" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="770" y="122" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">&lt;&lt;control&gt;&gt;</text>
+  <text x="770" y="140" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">3: ApptController</text>
+
+  <!-- Object 4: ScheduleDB (Entity) -->
+  <rect x="680" y="350" width="180" height="55" rx="4" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="770" y="372" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">&lt;&lt;entity&gt;&gt;</text>
+  <text x="770" y="390" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">4: ScheduleDB</text>
+
+  <!-- Object 5: BillingService (Control) -->
+  <rect x="360" y="350" width="180" height="55" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="450" y="372" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#b91c1c">&lt;&lt;control&gt;&gt;</text>
+  <text x="450" y="390" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#b91c1c">5: BillingService</text>
+
+  <!-- Object 6: PaymentGateway (Boundary) -->
+  <rect x="50" y="350" width="180" height="55" rx="4" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="140" y="372" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#64748b">&lt;&lt;boundary&gt;&gt;</text>
+  <text x="140" y="390" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">6: PaymentGateway</text>
+
+  <!-- Links & Messages -->
+  <line x1="180" y1="127" x2="360" y2="127" stroke="#1e293b" stroke-width="2"/>
+  <text x="270" y="118" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">1: submitRequest() ➔</text>
+  <text x="270" y="145" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#15803d">9: returnReceipt() ⬅</text>
+
+  <line x1="540" y1="127" x2="680" y2="127" stroke="#1e293b" stroke-width="2"/>
+  <text x="610" y="118" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">2: validate() ➔</text>
+
+  <line x1="770" y1="155" x2="770" y2="350" stroke="#1e293b" stroke-width="2"/>
+  <text x="790" y="250" font-family="Arial, sans-serif" font-size="10" fill="#0f172a">3: lockSlot() ⬇</text>
+
+  <line x1="680" y1="140" x2="520" y2="350" stroke="#1e293b" stroke-width="2"/>
+  <text x="590" y="240" font-family="Arial, sans-serif" font-size="10" fill="#0f172a">4: initBilling() ↙</text>
+
+  <line x1="450" y1="155" x2="450" y2="350" stroke="#1e293b" stroke-width="2"/>
+  <text x="470" y="250" font-family="Arial, sans-serif" font-size="10" fill="#0f172a">5: calcBill() ⬇</text>
+
+  <line x1="360" y1="377" x2="230" y2="377" stroke="#1e293b" stroke-width="2"/>
+  <text x="295" y="368" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">7: authTxn() ⬅</text>
+  <text x="295" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#15803d">8: status(OK) ➔</text>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-col', this)">Copy PlantUML</button>
+          <pre id="code-col">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+}
+top to bottom direction
+
+title Collaboration Diagram - Appointment Scheduling & Billing
+
+actor "__:Patient__" as P
+rectangle "<<boundary>>\n__:PatientPortal__" as UI
+rectangle "<<control>>\n__:AppointmentController__" as AC
+rectangle "<<entity>>\n__:ScheduleDB__" as DB
+rectangle "<<control>>\n__:BillingService__" as BS
+rectangle "<<boundary>>\n__:PaymentGateway__" as PG
+
+P -down-> UI : 1: submitBookingReq()\n6: initiatePayment()
+UI -right-> AC : 2: processBooking()
+AC -down-> DB : 3: checkAndLockSlot()
+AC -left-> BS : 4: initBillingRecord()
+UI -down-> BS : 5: computeBillAmount()
+BS -right-> PG : 7: authorizeTransaction()
+PG -left-> BS : 8: transactionStatus(OK)
+BS -up-> UI : 9: returnReceipt()
+
+@enduml
+</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 12 WHITEBOX -->
+    <div id="tab-whitebox" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>🧪 White-Box Testing & Cyclomatic Complexity</h2>
+          <p>Experiment 12: Control Flow Graph (CFG) & 100% Path Coverage on calculateBill()</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 11/Experiment_11_White_Box_Testing.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 11/Experiment_11_White_Box_Testing.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Control Flow Graph (CFG) - V(G) = 3</h3>
+        <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="700" height="600" viewBox="0 0 700 600">
+  <defs>
+    <marker id="cfg_arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="350" y="30" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="#0f172a">Control Flow Graph (CFG) - calculateBill() Method</text>
+  <text x="350" y="50" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#dc2626">Nodes N = 7, Edges E = 8, Connected Components P = 1 => V(G) = 8 - 7 + 2(1) = 3</text>
+
+  <!-- Node 1: Entry / Predicate 1 (fee == 0) -->
+  <circle cx="280" cy="100" r="24" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
+  <text x="280" y="105" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0369a1">1</text>
+  <text x="330" y="95" font-family="Arial, sans-serif" font-size="11" fill="#475569">if (fee == 0)</text>
+
+  <!-- Node 2: return -1.0 -->
+  <circle cx="120" cy="220" r="24" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="120" y="225" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#b91c1c">2</text>
+  <text x="60" y="215" font-family="Arial, sans-serif" font-size="11" fill="#b91c1c">return -1.0</text>
+
+  <!-- Node 3: totalBill = fee + labCost -->
+  <circle cx="440" cy="200" r="24" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+  <text x="440" y="205" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">3</text>
+  <text x="480" y="195" font-family="Arial, sans-serif" font-size="11" fill="#475569">totalBill = fee + labCost</text>
+
+  <!-- Node 4: Predicate 2 (hasIns || (isEmerg & totalBill > 5000)) -->
+  <circle cx="440" cy="300" r="24" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
+  <text x="440" y="305" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#0369a1">4</text>
+  <text x="480" y="295" font-family="Arial, sans-serif" font-size="11" fill="#475569">if (hasIns || (isEmerg &amp; total &gt; 5k))</text>
+
+  <!-- Node 5: totalBill = totalBill * 0.90 -->
+  <circle cx="340" cy="400" r="24" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="340" y="405" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#15803d">5</text>
+  <text x="250" y="400" font-family="Arial, sans-serif" font-size="11" fill="#15803d">totalBill *= 0.90</text>
+
+  <!-- Node 6: return totalBill -->
+  <circle cx="440" cy="490" r="24" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+  <text x="440" y="495" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#1e293b">6</text>
+  <text x="480" y="485" font-family="Arial, sans-serif" font-size="11" fill="#475569">return totalBill</text>
+
+  <!-- Node 7: Exit -->
+  <circle cx="280" cy="560" r="24" fill="#1e293b" stroke="#1e293b" stroke-width="2"/>
+  <text x="280" y="565" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#ffffff">7</text>
+  <text x="330" y="565" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#0f172a">Exit / End</text>
+
+  <!-- Edges -->
+  <!-- 1 -> 2 (True) -->
+  <line x1="260" y1="115" x2="135" y2="200" stroke="#dc2626" stroke-width="1.5" marker-end="url(#cfg_arrow)"/>
+  <text x="180" y="145" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#dc2626">True (fee==0)</text>
+
+  <!-- 1 -> 3 (False) -->
+  <line x1="300" y1="115" x2="425" y2="185" stroke="#1e293b" stroke-width="1.5" marker-end="url(#cfg_arrow)"/>
+  <text x="375" y="140" font-family="Arial, sans-serif" font-size="10" fill="#475569">False (fee!=0)</text>
+
+  <!-- 3 -> 4 -->
+  <line x1="440" y1="224" x2="440" y2="276" stroke="#1e293b" stroke-width="1.5" marker-end="url(#cfg_arrow)"/>
+
+  <!-- 4 -> 5 (True) -->
+  <line x1="420" y1="315" x2="355" y2="380" stroke="#16a34a" stroke-width="1.5" marker-end="url(#cfg_arrow)"/>
+  <text x="365" y="340" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#16a34a">True (Discount)</text>
+
+  <!-- 4 -> 6 (False) -->
+  <line x1="460" y1="315" x2="520" y2="380" stroke="#1e293b" stroke-width="1.5"/>
+  <line x1="520" y1="380" x2="460" y2="475" stroke="#1e293b" stroke-width="1.5" marker-end="url(#cfg_arrow)"/>
+  <text x="525" y="400" font-family="Arial, sans-serif" font-size="10" fill="#475569">False (No Disc)</text>
+
+  <!-- 5 -> 6 -->
+  <line x1="360" y1="415" x2="425" y2="470" stroke="#1e293b" stroke-width="1.5" marker-end="url(#cfg_arrow)"/>
+
+  <!-- 2 -> 7 -->
+  <line x1="120" y1="244" x2="120" y2="540" stroke="#dc2626" stroke-width="1.5"/>
+  <line x1="120" y1="540" x2="256" y2="555" stroke="#dc2626" stroke-width="1.5" marker-end="url(#cfg_arrow)"/>
+
+  <!-- 6 -> 7 -->
+  <line x1="420" y1="505" x2="300" y2="545" stroke="#1e293b" stroke-width="1.5" marker-end="url(#cfg_arrow)"/>
+</svg></div>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-cfg', this)">Copy PlantUML</button>
+          <pre id="code-cfg">// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+title Control Flow Graph (CFG) - calculateBill() Method [V(G) = 3]
+
+(*) --> "Node 1: Entry / if (fee == 0)"
+
+"Node 1: Entry / if (fee == 0)" --> "Node 2: return -1.0 (Error)" : [fee == 0] (T)
+"Node 2: return -1.0 (Error)" --> "Node 7: Exit / Return"
+
+"Node 1: Entry / if (fee == 0)" --> "Node 3: totalBill = fee + labCost" : [fee != 0] (F)
+
+"Node 3: totalBill = fee + labCost" --> "Node 4: if (hasIns || (isEmerg && totalBill > 5000))"
+
+"Node 4: if (hasIns || (isEmerg && totalBill > 5000))" --> "Node 5: totalBill = totalBill * 0.90" : [Condition TRUE]
+"Node 5: totalBill = totalBill * 0.90" --> "Node 6: return totalBill"
+
+"Node 4: if (hasIns || (isEmerg && totalBill > 5000))" --> "Node 6: return totalBill" : [Condition FALSE]
+
+"Node 6: return totalBill" --> "Node 7: Exit / Return"
+
+@enduml
+</pre>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Source Code: HospitalBillingTest.java</h3>
+        <div class="code-box">
+          <button class="copy-btn" onclick="copyCode('code-java', this)">Copy Java Code</button>
+          <pre id="code-java">public class HospitalBillingTest {
+
+    public static double calculateBill(double fee, double labCost, boolean hasIns, boolean isEmerg) {
+        if (fee == 0) {
+            return -1.0;
+        }
+        double totalBill = fee + labCost;
+
+        if (hasIns || (isEmerg && totalBill > 5000)) {
+            totalBill = totalBill * 0.90;
+        }
+        return totalBill;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("=================================================================");
+        System.out.println("  White-Box Testing: Hospital Management System (SE Exp 12)");
+        System.out.println("  Method Under Test: calculateBill(fee, labCost, hasIns, isEmerg)");
+        System.out.println("=================================================================");
+
+        System.out.println("\n--- Control Flow Graph (CFG) Analysis ---");
+        System.out.println("Nodes (N) = 7, Edges (E) = 8, Connected Components (P) = 1");
+        System.out.println("Cyclomatic Complexity V(G) = E - N + 2P = 8 - 7 + 2(1) = 3");
+        System.out.println("Predicate Nodes (P_n) = 2, so V(G) = P_n + 1 = 2 + 1 = 3");
+        System.out.println("Therefore, Exactly 3 Independent Basis Paths are required for 100% path coverage.");
+
+        System.out.println("\n--- Basis Paths & Test Cases Execution ---");
+
+        double res1 = calculateBill(0, 1000, false, false);
+        System.out.println("Test Case 1 (Path 1: fee=0, labCost=1000, hasIns=false, isEmerg=false):");
+        System.out.println("Expected: -1.0 (Invalid input error) | Actual: " + res1 + " -> " + (res1 == -1.0 ? "PASSED [OK]" : "FAILED"));
+
+        double res2 = calculateBill(2000, 3000, true, false);
+        System.out.println("\nTest Case 2 (Path 2: fee=2000, labCost=3000, hasIns=true, isEmerg=false):");
+        System.out.println("Expected: 4500.0 (10% discount on 5000) | Actual: " + res2 + " -> " + (res2 == 4500.0 ? "PASSED [OK]" : "FAILED"));
+
+        double res3 = calculateBill(1500, 500, false, false);
+        System.out.println("\nTest Case 3 (Path 3: fee=1500, labCost=500, hasIns=false, isEmerg=false):");
+        System.out.println("Expected: 2000.0 (No discount) | Actual: " + res3 + " -> " + (res3 == 2000.0 ? "PASSED [OK]" : "FAILED"));
+
+        System.out.println("\n=================================================================");
+        System.out.println("Result: All 3 Basis Paths Covered Successfully (100% Branch & Statement Coverage)");
+        System.out.println("=================================================================");
+    }
+}
+</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 1 PROBLEM -->
+    <div id="tab-exp1" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>📄 Experiment 1: Problem Statement & Process Model</h2>
+          <p>V-Model Technical Justification & Clinical Workflows</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 1_Problem_Statement_Process_Model.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 1_Problem_Statement_Process_Model.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <p>This experiment details the transition from manual ledger administration to a computerized Hospital Management System. Key justification for V-Model includes frozen healthcare regulatory rules, correctness-critical patient data, and 1-to-1 requirement-to-test mapping.</p>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 2 SRS -->
+    <div id="tab-exp2" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>📋 Experiment 2: SRS Document (IEEE 830 Format)</h2>
+          <p>Functional & Non-Functional Specifications for HMS</p>
+        </div>
+        <div class="actions">
+          <a href="Question No.1_SRS_Hospital_Management_System.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No.1_SRS_Hospital_Management_System.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <p>Comprehensive IEEE 830 Software Requirements Specification covering Patient, Doctor, Receptionist, Pharmacist, Lab Technician, and Admin user classes with security, performance, and HIPAA compliance requirements.</p>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 5 SCRUM -->
+    <div id="tab-scrum" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>🏃 Experiment 5: Scrum Activity Log & JIRA Agile</h2>
+          <p>5 Sprint Cadence, Backlogs, User Stories & Story Points</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 4/Scrum Activity Log - Hospital Management System.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 4/Scrum Activity Log - Hospital Management System.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <p>Sprint 1 (Auth/DB - 18 pts), Sprint 2 (Appointments - 21 pts), Sprint 3 (EHR/Lab - 19 pts), Sprint 4 (Billing/Payment - 23 pts), Sprint 5 (Testing/Deploy - 15 pts).</p>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 9 COHESION -->
+    <div id="tab-cohesion" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>🧩 Experiment 9: Cohesion & Coupling Analysis</h2>
+          <p>Quantitative Module Dependency Metrics</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 8_Cohesion_Coupling.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 8_Cohesion_Coupling.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <p>Functional Cohesion for Patient Registration and Billing. Coupling metric C = 1 - 1/(1+di+2ci+do+2co+gd+2gc+w+r). Highest coupling observed in Pharmacy Dispense -> MedicineStock (C = 0.923).</p>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 10 RMMM -->
+    <div id="tab-rmmm" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>🛡️ Experiment 10: RMMM Plan (Risk Management)</h2>
+          <p>Mitigation, Monitoring & Contingency Triggers</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 9_RMMM_Hospital_Management_System.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 9_RMMM_Hospital_Management_System.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <p>Risk Exposure = P x I. Top risks addressed: Server crash / patient data loss (automated cloud RAID backups) and unauthorized record breach (role-based access control and AES encryption).</p>
+      </div>
+    </div>
+
+    <!-- TAB: EXP 11 SCM -->
+    <div id="tab-scm" class="panel">
+      <div class="header-bar">
+        <div>
+          <h2>🏷️ Experiment 11: SCM & Git Version Control</h2>
+          <p>Configuration Items, CCB Change Control & Branching Strategy</p>
+        </div>
+        <div class="actions">
+          <a href="Question No. 10/Experiment_10_SCM_Git_Version_Control_HMS.pdf" download class="btn btn-primary">Download PDF</a>
+          <a href="Question No. 10/Experiment_10_SCM_Git_Version_Control_HMS.docx" download class="btn btn-secondary">Download DOCX</a>
+        </div>
+      </div>
+      <div class="card">
+        <p>Tracking CIs (SRS, UML, DDL, calculateBill code), Git-flow branches (main, develop, feature/billing-module), and formal Change Request (CR) evaluation workflow.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+      
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+      
+      const btn = Array.from(document.querySelectorAll('.nav-item')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (btn) btn.classList.add('active');
+    }
+
+    function copyCode(preId, btn) {
+      const pre = document.getElementById(preId);
+      if (!pre) return;
+      navigator.clipboard.writeText(pre.innerText).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = "Copied! ✅";
+        btn.style.background = "#10b981";
+        setTimeout(() => {
+          btn.innerText = orig;
+          btn.style.background = "";
+        }, 2000);
+      }).catch(err => alert("Copy error: " + err));
+    }
+  </script>
+</body>
+</html>

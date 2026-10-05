@@ -1,0 +1,78 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startuml
+title Use Case Diagram - Hospital Management System (HMS)
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam actorStyle stickman
+
+skinparam usecase {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+}
+
+actor "Patient" as Patient
+actor "Receptionist" as Recep
+actor "Doctor" as Doctor
+actor "Pharmacist" as Pharm
+actor "Lab Technician" as LabTech
+actor "Administrator" as Admin
+actor "Payment Gateway" as PG
+
+rectangle "HOSPITAL MANAGEMENT SYSTEM (HMS)" {
+
+    usecase "Login & Authenticate" as UC_Auth
+    usecase "Register Patient Profile" as UC1
+    usecase "Schedule Appointment" as UC2
+    usecase "Verify Doctor Availability" as UC2_Inc
+    usecase "Cancel / Reschedule Appointment" as UC2_Ext
+    usecase "Record Clinical Notes & Diagnosis" as UC3
+    usecase "Issue Electronic Prescription" as UC4
+    usecase "Order Diagnostic Lab Test" as UC5
+    usecase "Dispense Prescribed Medication" as UC6
+    usecase "Update Pharmacy Drug Stock" as UC7
+    usecase "Conduct Test & Upload Lab Report" as UC8
+    usecase "Calculate Total Bill" as UC9
+    usecase "Apply Health Insurance Discount" as UC9_Ext
+    usecase "Process Payment Transaction" as UC10
+    usecase "Manage Staff & Role Access" as UC11
+    usecase "Generate Hospital MIS Reports" as UC12
+
+    ' Relationships
+    UC2 .> UC2_Inc : <<include>>
+    UC2_Ext .> UC2 : <<extend>>
+
+    UC9 .> UC10 : <<include>>
+    UC9_Ext .> UC9 : <<extend>>
+
+    UC1 .> UC_Auth : <<include>>
+    UC3 .> UC_Auth : <<include>>
+    UC11 .> UC_Auth : <<include>>
+}
+
+' Actor to Use Case Associations
+Patient --> UC2
+Patient --> UC10
+
+Recep --> UC1
+Recep --> UC2
+Recep --> UC9
+
+Doctor --> UC3
+Doctor --> UC4
+Doctor --> UC5
+
+Pharm --> UC6
+Pharm --> UC7
+
+LabTech --> UC8
+
+Admin --> UC11
+Admin --> UC12
+
+UC10 --> PG
+
+@enduml

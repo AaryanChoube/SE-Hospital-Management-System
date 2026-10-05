@@ -1,0 +1,25 @@
+# 1. Initialize repository and create initial commit
+git init HMS_Repository
+cd HMS_Repository
+git add .
+git commit -m "feat: Initial commit of HMS SRS and system specifications"
+
+# 2. Establish development branch
+git branch develop
+git checkout develop
+
+# 3. Create and work on Billing feature
+git checkout -b feature/billing-module
+# [Edit HospitalBillingTest.java]
+git add HospitalBillingTest.java
+git commit -m "feat(billing): implement calculateBill() with insurance waiver logic"
+
+# 4. Merge feature into develop
+git checkout develop
+git merge --no-ff feature/billing-module -m "merge: integrate billing module into develop"
+
+# 5. Release tagging on main
+git checkout main
+git merge develop
+git tag -a v1.0 -m "Release v1.0: Baseline approved by CCB"
+git push origin main --tags

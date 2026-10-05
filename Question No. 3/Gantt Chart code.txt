@@ -1,0 +1,80 @@
+// Paste the below code in "Planttext.com" to generate the Diagram
+
+@startgantt
+title Gantt Chart - Hospital Management System (HMS) [47 Days CPM Schedule]
+printscale daily
+hide footbox
+
+<style>
+ganttDiagram {
+  FontName Arial
+  task {
+    FontName Arial
+    FontColor black
+    FontSize 11
+    LineColor black
+  }
+  milestone {
+    FontColor black
+    FontSize 11
+    BackGroundColor black
+    LineColor black
+  }
+  arrow {
+    LineColor black
+  }
+  timeline {
+    BackgroundColor white
+    LineColor black
+  }
+}
+</style>
+
+Project starts 2026-08-01
+
+[A: Requirement Analysis] as [A] lasts 5 days
+[A] is colored in Red/LightPink
+
+[B: SRS Preparation] as [B] lasts 4 days
+[B] starts at [A]'s end
+[B] is colored in Red/LightPink
+
+[C: System Design (DFD / UML)] as [C] lasts 6 days
+[C] starts at [B]'s end
+[C] is colored in Red/LightPink
+
+[D: Database Design & Schema] as [D] lasts 5 days
+[D] starts at [C]'s end
+[D] is colored in Red/LightPink
+
+[E: UI/UX Wireframing] as [E] lasts 8 days
+[E] starts at [C]'s end
+[E] is colored in LightBlue
+
+[F: Patient Reg & Appt Module] as [F] lasts 9 days
+[F] starts at [D]'s end
+[F] is colored in Red/LightPink
+
+[G: Doctor Consultation & EHR] as [G] lasts 8 days
+[G] starts at [D]'s end
+[G] is colored in LightBlue
+
+[H: Pharmacy & Lab Module] as [H] lasts 7 days
+[H] starts at [F]'s end
+[H] is colored in LightBlue
+
+[I: Billing & Payment Integration] as [I] lasts 9 days
+[I] starts at [F]'s end
+[I] is colored in Red/LightPink
+
+[J: Integration & White-Box Testing] as [J] lasts 6 days
+[J] starts at [I]'s end
+[J] is colored in Red/LightPink
+
+[K: Deployment & User Training] as [K] lasts 3 days
+[K] starts at [J]'s end
+[K] is colored in Red/LightPink
+
+[Project Baseline Complete] happens at [K]'s end
+
+@endgantt

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="620" viewBox="0 0 980 620">
+  <defs>
+    <marker id="seq_arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="490" y="28" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="#0f172a">Sequence Diagram - Patient Consultation &amp; Billing Lifecycle</text>
+
+  <!-- Lifeline Headers -->
+  <rect x="40" y="55" width="100" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="90" y="77" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1e293b">Patient</text>
+  <line x1="90" y1="90" x2="90" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="180" y="55" width="120" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="240" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:PatientPortal</text>
+  <line x1="240" y1="90" x2="240" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="340" y="55" width="130" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="405" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:ApptController</text>
+  <line x1="405" y1="90" x2="405" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="510" y="55" width="120" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="570" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:ScheduleDB</text>
+  <line x1="570" y1="90" x2="570" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="670" y="55" width="130" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="735" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:BillingService</text>
+  <line x1="735" y1="90" x2="735" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <rect x="830" y="55" width="120" height="35" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+  <text x="890" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1e293b">:PaymentGateway</text>
+  <line x1="890" y1="90" x2="890" y2="580" stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <!-- Messages -->
+  <!-- 1. Book Appt -->
+  <line x1="90" y1="125" x2="235" y2="125" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="118" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">1: bookAppointment(docId, slot)</text>
+
+  <!-- 2. Validate Slot -->
+  <line x1="240" y1="155" x2="400" y2="155" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="320" y="148" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">2: validateSlot(docId, slot)</text>
+
+  <!-- 3. Query DB -->
+  <line x1="405" y1="185" x2="565" y2="185" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="485" y="178" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">3: queryAvailability()</text>
+
+  <!-- 4. Return status -->
+  <line x1="565" y1="215" x2="405" y2="215" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="485" y="208" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0369a1">4: slotAvailable: true</text>
+
+  <!-- 5. Issue Token -->
+  <line x1="405" y1="245" x2="240" y2="245" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="320" y="238" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0369a1">5: tokenIssued(T101)</text>
+
+  <line x1="240" y1="270" x2="90" y2="270" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="263" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0369a1">6: displayToken(T101)</text>
+
+  <!-- Consultation Divider -->
+  <rect x="50" y="295" width="880" height="24" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="490" y="311" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#64748b">--- Patient Consults Doctor &amp; Undergoes Treatment ---</text>
+
+  <!-- 7. Request Checkout -->
+  <line x1="90" y1="350" x2="235" y2="350" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="343" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">7: requestCheckoutBill()</text>
+
+  <!-- 8. Calculate Bill -->
+  <line x1="240" y1="380" x2="730" y2="380" stroke="#dc2626" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="480" y="373" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#b91c1c">8: calculateBill(fee, labCost, hasIns, isEmerg)</text>
+
+  <!-- 9. Return Bill Amount -->
+  <line x1="730" y1="410" x2="240" y2="410" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="480" y="403" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0369a1">9: return totalAmountPayable</text>
+
+  <!-- 10. Pay Online -->
+  <line x1="90" y1="440" x2="235" y2="440" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="433" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">10: authorizePayment(amount, UPI)</text>
+
+  <line x1="240" y1="470" x2="885" y2="470" stroke="#1e293b" stroke-width="1.5" marker-end="url(#seq_arrow)"/>
+  <text x="560" y="463" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0f172a">11: chargeGateway(token, amount)</text>
+
+  <line x1="885" y1="500" x2="240" y2="500" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="560" y="493" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#15803d">12: paymentStatus: SUCCESS (authTxnId)</text>
+
+  <!-- 13. Receipt -->
+  <line x1="240" y1="535" x2="90" y2="535" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3" marker-end="url(#seq_arrow)"/>
+  <text x="160" y="528" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#15803d">13: deliverDigitalReceipt(PDF)</text>
+</svg>
